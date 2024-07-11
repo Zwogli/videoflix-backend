@@ -152,7 +152,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = (
-    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend', # Standard-Django-Backend
+    'allauth.account.auth_backends.AuthenticationBackend', # django-allauth Backend
 )
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'   # Only for development purposes
