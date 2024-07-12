@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     # 
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware'  # Django-allauth
+    'allauth.account.middleware.AccountMiddleware',  # Django-allauth
+    'corsheaders.middleware.CorsMiddleware',    # Corseheaders
 ]
 
 ROOT_URLCONF = 'videoflix.urls'
@@ -187,3 +189,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
+
+
+# Cors
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',
+]
