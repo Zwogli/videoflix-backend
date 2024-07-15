@@ -20,6 +20,11 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_verified', True)
 
         return self.create_user(email, password, **extra_fields)
+    
+    
+def default_expiry():
+    return timezone.now() + timedelta(minutes=30)
+    
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
@@ -29,12 +34,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
-    verification_expiry = models.DateTimeField(default=timezone.now() + timedelta(minutes=30))
+    verification_expiry = models.DateTimeField(default=default_expiry)
     
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+
     def __str__(self):
         return self.email
+    
