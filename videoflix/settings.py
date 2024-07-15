@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-zw1c12y6frk-f%duc#m9kng=@bvw(%-%#-(4$#88=*mtrab%=t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
 
 # Application definition
@@ -158,12 +158,14 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend', # django-allauth Backend
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'   # Only for development purposes
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+""" EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'   # Only for development purposes
 EMAIL_HOST = 'smtp.example.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your_email@example.com'
-EMAIL_HOST_PASSWORD = 'your_password'
+EMAIL_HOST_PASSWORD = 'your_password' """
 
 # Django allauth settings
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
