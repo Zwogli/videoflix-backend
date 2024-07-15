@@ -7,6 +7,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         now = timezone.now()
-        unverified_users = CustomUser.objects.filter(is_verified=False, verification_expiry__lt=now)
+        unverified_users = CustomUser.objects.filter(is_verified=False, verification_expiry__lt=now)    #__lt: Lookup Type lt stands for "less than"
         unverified_users.delete()
         self.stdout.write(self.style.SUCCESS('Successfully deleted unverified users'))
