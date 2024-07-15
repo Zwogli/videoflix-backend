@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.utils import timezone
+from datetime import timedelta
 
 # Create your models here.
 class CustomUserManager(BaseUserManager):
@@ -25,6 +27,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=30, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
+    verification_expiry = models.DateTimeField(default=timezone.now() + timedelta(minutes=30))
     
     objects = CustomUserManager()
 
