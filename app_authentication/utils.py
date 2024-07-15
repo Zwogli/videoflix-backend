@@ -11,6 +11,7 @@ def send_verification_email(user):
     verification_link = f"http://localhost:8000/auth/verify/{uid}/{token}/"
     
     subject = 'Verify your email address'
+    # Django automatically searches in the directories defined in the TEMPLATES settings. 
     message = render_to_string('verification_email.html', {
         'user': user,
         'verification_link': verification_link,
