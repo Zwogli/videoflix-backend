@@ -27,7 +27,7 @@ def default_expiry():
     
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=False) #todo reset to True after deploy
     user_name = models.CharField(max_length=150, default='default_username')
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
