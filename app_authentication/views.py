@@ -3,13 +3,15 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
-from .serializers import UserSerializer
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
-from .models import CustomUser
 from django.utils import timezone
+
+from .serializers import UserSerializer
+from .models import CustomUser
+from .utils import send_verification_email
 
 
 CustomUser = get_user_model()
@@ -35,5 +37,10 @@ class UserCreateView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = []
+    
+    
+    def perform_create(self, serializer):
+        user = serializer.save()
+        send_verification_email(user)
     
     
