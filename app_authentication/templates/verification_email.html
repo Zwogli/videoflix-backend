@@ -5,8 +5,18 @@
 	</head>
 	<body>
 		<p>Hi {{ user.user_name }},</p>
-		<p>Please click the link below to verify your email address:</p>
-		<p><a href="{{ verification_link }}">{{ verification_link }}</a></p>
-		<p>This link will expire in 30 minutes.</p>
+		<p>
+			Bitte klicken Sie auf den folgenden Link, um Ihre E-Mail-Adresse zu
+			bestätigen:
+		</p>
+		<p><a href="{{ verification_link }}">Bestätigungs Link</a></p>
+		<p>Dieser Link läuft in 30 Minuten aus.</p>
+		<p>
+			Erst wenn Sie Ihre E-Mail-Adresse bestätigt haben können Sie sich in
+			Videoflix einloggen.
+		</p>
+		<br>
+		<br>
+		<p>Viel Spaß wünsch Ihnen ihr Videoflix Team</p>
 	</body>
 </html>
