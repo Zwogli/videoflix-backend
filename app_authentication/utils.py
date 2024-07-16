@@ -7,13 +7,16 @@ from django.contrib.auth.tokens import default_token_generator
 
 def send_verification_email(user):
     token = default_token_generator.make_token(user)
-    uid = urlsafe_base64_encode(force_bytes(user.pk))
-    verification_link = f"http://localhost:8000/auth/verify/{uid}/{token}/"
-    
+    user_id = urlsafe_base64_encode(force_bytes(user.pk)) # Encode the pk(primäry key)
+    verification_link = f"http://localhost:8000/auth/verify/{user_id}/{token}/"
     subject = 'Verify your email address'
-    # Django automatically searches in the directories defined in the TEMPLATES settings. 
-    message = render_to_string('verification_email.html', {
+    message = create_message(user, verification_link)
+    
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+    
+    
+def create_message(user, verification_link):
+    return render_to_string('verification_email.html', {
         'user': user,
         'verification_link': verification_link,
     })
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
