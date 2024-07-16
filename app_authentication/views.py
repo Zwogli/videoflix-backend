@@ -19,8 +19,8 @@ CustomUser = get_user_model()
 
 # Create your views here.
 def verify_email(request, uidb64, token):
-    uid = urlsafe_base64_decode(uidb64).decode()
-    user = get_object_or_404(CustomUser, pk=uid)
+    user_id = urlsafe_base64_decode(uidb64).decode()
+    user = get_object_or_404(CustomUser, pk=user_id)
     if timezone.now() > user.verification_expiry:
         user.delete()
         return HttpResponse('Verification link has expired and the account has been deleted.')
