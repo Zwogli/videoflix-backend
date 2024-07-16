@@ -21,16 +21,44 @@ CustomUser = get_user_model()
 def verify_email(request, uidb64, token):
     user_id = urlsafe_base64_decode(uidb64).decode()
     user = get_object_or_404(CustomUser, pk=user_id)
-    if timezone.now() > user.verification_expiry:
+    
+    if is_verification_expired(user.verification_expiry):
         user.delete()
         return HttpResponse('Verification link has expired and the account has been deleted.')
     
-    if default_token_generator.check_token(user, token):
+    if is_valid_token(user, token):
         user.is_verified = True
         user.save()
         return HttpResponse('Your email has been verified.')
     else:
         return HttpResponse('Verification link is invalid or has expired.')
+    
+    
+def is_verification_expired(expiry_time):
+    """
+    Checks if the current time is past the given expiry time.
+
+    Parameters:
+    - expiry_time: A datetime object representing the expiration time of verification.
+
+    Returns:
+    - True if the current time is past the expiry time, otherwise False.
+    """
+    return timezone.now() > expiry_time
+
+
+def is_valid_token(user, token):
+    """
+    Checks whether the token sent matches that of the user token
+
+    Parameters:
+    - user: A user object.
+    - token: Token that came from the request
+
+    Returns:
+    - True if the tokens match, otherwise False.
+    """
+    return default_token_generator.check_token(user, token)
     
     
 class UserCreateView(generics.CreateAPIView):
