@@ -9,7 +9,7 @@ from django.contrib.auth.tokens import default_token_generator
 def send_verification_email(user):
     token = default_token_generator.make_token(user)
     user_id = urlsafe_base64_encode(force_bytes(user.pk)) # Encode the pk(primäry key)
-    verification_link = f"http://localhost:4200/verification/{user_id}/{token}/" #f"http://localhost:8000/auth/verify/{user_id}/{token}/"
+    verification_link = f"{settings.Frontend_URL}/verification/{user_id}/{token}/" #f"http://localhost:8000/auth/verify/{user_id}/{token}/"
     
     subject = 'Validierung der Email-Adresse für Videoflix'
     message = create_verification_message(user, verification_link)

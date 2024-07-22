@@ -198,3 +198,6 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200',
 ]
+
+
+FRONTEND_URL = 'http://localhost:4200'
