@@ -9,6 +9,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.utils import timezone
+from django.middleware.csrf import get_token
 
 from django.conf import settings
 from .serializers import UserSerializer
@@ -21,6 +22,10 @@ CustomUser = get_user_model()
 
 
 # Create your views here.
+def get_csrf_token(request):
+    csrf_token = get_token(request)
+    return HttpResponse(csrf_token)
+
 class UserCreateView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
