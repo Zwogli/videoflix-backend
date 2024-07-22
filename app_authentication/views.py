@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework import status
 from django.contrib.auth import get_user_model
 from django.utils.http import urlsafe_base64_decode
@@ -9,15 +10,28 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.utils import timezone
 
+from django.conf import settings
 from .serializers import UserSerializer
 from .models import CustomUser
 from .utils import send_verification_email
+from .utils import send_reset_password_email
 
 
 CustomUser = get_user_model()
 
 
 # Create your views here.
+class UserCreateView(generics.CreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = []
+    
+    
+    def perform_create(self, serializer):
+        user = serializer.save()
+        send_verification_email(user)
+        
+        
 def verify_email(request, uidb64, token):
     user_id = urlsafe_base64_decode(uidb64).decode()
     user = get_object_or_404(CustomUser, pk=user_id)
@@ -58,17 +72,16 @@ def is_valid_token(user, token):
     Returns:
     - True if the tokens match, otherwise False.
     """
-    return default_token_generator.check_token(user, token)
+    return default_token_generator.check_token(user, token)    
+
+
+def reset_password_with_email(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        user = get_object_or_404(CustomUser, email=email)
+        
+        send_reset_password_email(user)
+        
+        return JsonResponse({'message': 'Password reset link has been sent to your email.'})
     
-    
-class UserCreateView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = []
-    
-    
-    def perform_create(self, serializer):
-        user = serializer.save()
-        send_verification_email(user)
-    
-    
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)
