@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.utils import timezone
 from django.middleware.csrf import get_token
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
 from django.conf import settings
 from .serializers import UserSerializer
@@ -81,7 +81,8 @@ def is_valid_token(user, token):
     return default_token_generator.check_token(user, token)    
 
 
-@csrf_protect
+# @csrf_protect
+@csrf_exempt
 def reset_password_with_email(request):
     if request.method == 'POST':
         email = request.POST.get('email')
