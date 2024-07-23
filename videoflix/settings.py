@@ -54,12 +54,12 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',    # Corseheaders
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',  # Django-allauth
-    'corsheaders.middleware.CorsMiddleware',    # Corseheaders
 ]
 
 ROOT_URLCONF = 'videoflix.urls'
@@ -198,6 +198,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200',
+    'http://127.0.0.1:8000',    # local backend
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -217,5 +218,17 @@ CORS_ALLOW_METHODS = [
     'OPTIONS',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:4200',
+]
+
+
+# CSRF-Token
+
+CSRF_COOKIE_SECURE = False  # Setze auf True, wenn du HTTPS verwendest
+CSRF_COOKIE_HTTPONLY = False
+
+
+# URL
 
 FRONTEND_URL = 'http://localhost:4200'
