@@ -1,22 +1,24 @@
-from django.shortcuts import render
+# from django.shortcuts import render
+from django.conf import settings
 from rest_framework import generics
-from rest_framework.response import Response
+# from rest_framework.response import Response
 from django.http import JsonResponse
-from rest_framework import status
+# from rest_framework import status
 from django.contrib.auth import get_user_model
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
-from django.conf import settings
 from .serializers import UserSerializer
 from .models import CustomUser
 from .utils import send_verification_email
 from .utils import send_reset_password_email
+
+import json
 
 
 CustomUser = get_user_model()
@@ -81,15 +83,25 @@ def is_valid_token(user, token):
     return default_token_generator.check_token(user, token)    
 
 
-# @csrf_protect
-@csrf_exempt
+
+@csrf_protect
 def reset_password_with_email(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        user = get_object_or_404(CustomUser, email=email)
+        try:
+            # JSON-Daten aus dem Body extrahieren
+            data = json.loads(request.body.decode('utf-8'))
+            email = data.get('email')
+            print("Show email: ", email)
+            
+            # Überprüfen, ob die E-Mail vorhanden ist
+            if email:
+                user = get_object_or_404(CustomUser, email=email)
+                send_reset_password_email(user)
+                return JsonResponse({'message': 'Password reset link has been sent to your email.'})
+            else:
+                return JsonResponse({'error': 'Email not provided.'}, status=400)
         
-        send_reset_password_email(user)
-        
-        return JsonResponse({'message': 'Password reset link has been sent to your email.'})
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON.'}, status=400)
     
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
