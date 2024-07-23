@@ -9,7 +9,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.utils import timezone
-from django.middleware.csrf import get_token, csrf_exempt, csrf_protect
+from django.middleware.csrf import get_token
+from django.views.decorators.csrf import csrf_protect
 
 from django.conf import settings
 from .serializers import UserSerializer
