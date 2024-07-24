@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 from django.middleware.csrf import get_token
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.views.decorators.csrf import csrf_protect, csrf_exempt, ensure_csrf_cookie
 
 from .serializers import UserSerializer
 from .models import CustomUser
@@ -25,10 +25,10 @@ CustomUser = get_user_model()
 
 
 # Create your views here.
+@ensure_csrf_cookie
 def get_csrf_token(request):
-    csrf_token = get_token(request)
-    # return HttpResponse(csrf_token)
-    return JsonResponse({'csrfToken': csrf_token})
+    print('Csrf-Token: ', request.COOKIES.get('csrftoken'))
+    return JsonResponse({'csrfToken': request.COOKIES.get('csrftoken')})
 
 class UserCreateView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -87,17 +87,14 @@ def is_valid_token(user, token):
 
 @csrf_protect
 def reset_password_with_email(request):
-    csrf_token = request.META.get('HTTP_X_CSRFTOKEN', 'Not Found')
-    print("CSRF Token received:", csrf_token)
+    # csrf_token = request.META.get('HTTP_X_CSRFTOKEN', 'Not Found')
+    # print("CSRF Token received:", csrf_token)
     if request.method == 'POST':
-        # CSRF-Token aus den Cookies oder dem Header extrahieren
         try:
-            # JSON-Daten aus dem Body extrahieren
             data = json.loads(request.body.decode('utf-8'))
             email = data.get('email')
             print("Show email: ", email)
             
-            # Überprüfen, ob die E-Mail vorhanden ist
             if email:
                 user = get_object_or_404(CustomUser, email=email)
                 send_reset_password_email(user)
