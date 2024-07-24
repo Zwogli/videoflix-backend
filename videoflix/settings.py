@@ -218,15 +218,18 @@ CORS_ALLOW_METHODS = [
     'OPTIONS',
 ]
 
+
+# CSRF-Token
+
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:4200',
 ]
 
-
-# CSRF-Token
-
 CSRF_COOKIE_SECURE = False  # Setze auf True, wenn du HTTPS verwendest
 CSRF_COOKIE_HTTPONLY = False
+CSRF_USE_SESSIONS = False
+
+CSRF_HEADER_NAME = 'X-CSRFToken'
 
 
 # URL
