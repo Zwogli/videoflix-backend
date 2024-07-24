@@ -1,9 +1,6 @@
-# from django.shortcuts import render
 from django.conf import settings
 from rest_framework import generics
-# from rest_framework.response import Response
 from django.http import JsonResponse
-# from rest_framework import status
 from django.contrib.auth import get_user_model
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
@@ -27,7 +24,7 @@ CustomUser = get_user_model()
 # Create your views here.
 @ensure_csrf_cookie
 def get_csrf_token(request):
-    csrf_token = request.COOKIES.get('csrftoken')
+    csrf_token = request.META.get('CSRF_COOKIE', None)
     if not csrf_token:
         print('CSRF-Token ist nicht im Cookie vorhanden.')
     else:
