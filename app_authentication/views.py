@@ -27,7 +27,11 @@ CustomUser = get_user_model()
 # Create your views here.
 @ensure_csrf_cookie
 def get_csrf_token(request):
-    print('Csrf-Token: ', request.COOKIES.get('csrftoken'))
+    csrf_token = request.COOKIES.get('csrftoken')
+    if not csrf_token:
+        print('CSRF-Token ist nicht im Cookie vorhanden.')
+    else:
+        print('CSRF-Token im Backend:', csrf_token)
     return JsonResponse({'csrfToken': request.COOKIES.get('csrftoken')})
 
 class UserCreateView(generics.CreateAPIView):
