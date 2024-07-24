@@ -9,6 +9,8 @@ from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_protect, csrf_exempt, ensure_csrf_cookie
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
 
 from .serializers import UserSerializer
 from .models import CustomUser
@@ -24,12 +26,9 @@ CustomUser = get_user_model()
 # Create your views here.
 @ensure_csrf_cookie
 def get_csrf_token(request):
-    csrf_token = request.META.get('CSRF_COOKIE', None)
-    if not csrf_token:
-        print('CSRF-Token ist nicht im Cookie vorhanden.')
-    else:
-        print('CSRF-Token im Backend:', csrf_token)
-    return JsonResponse({'csrfToken': request.COOKIES.get('csrftoken')})
+    csrf_token = get_token(request)
+    print("Backend Token: ", csrf_token)
+    return JsonResponse({'csrfToken': csrf_token})
 
 class UserCreateView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
