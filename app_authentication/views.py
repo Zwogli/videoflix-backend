@@ -23,13 +23,6 @@ import json
 CustomUser = get_user_model()
 
 
-# Create your views here.
-@ensure_csrf_cookie
-def get_csrf_token(request):
-    csrf_token = get_token(request)
-    print("Backend Token: ", csrf_token)
-    return JsonResponse({'csrfToken': csrf_token})
-
 class UserCreateView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
@@ -85,10 +78,8 @@ def is_valid_token(user, token):
 
 
 
-@csrf_protect
 def reset_password_with_email(request):
-    # csrf_token = request.META.get('HTTP_X_CSRFTOKEN', 'Not Found')
-    # print("CSRF Token received:", csrf_token)
+    print('Hello World')
     if request.method == 'POST':
         try:
             data = json.loads(request.body.decode('utf-8'))

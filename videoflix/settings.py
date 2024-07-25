@@ -55,7 +55,6 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'corsheaders.middleware.CorsMiddleware',    # Corseheaders
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -221,20 +220,6 @@ CORS_ALLOW_METHODS = [
     'DELETE',
     'OPTIONS',
 ]
-
-
-# CSRF-Token
-
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:4200',
-]
-
-CSRF_COOKIE_SECURE = False  # Setze auf True, wenn du HTTPS verwendest
-CSRF_COOKIE_HTTPONLY = False
-CSRF_USE_SESSIONS = False
-
-CSRF_HEADER_NAME = 'X-CSRFToken'
-CSRF_COOKIE_NAME = 'csrftoken'
 
 
 # URL
