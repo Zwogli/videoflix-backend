@@ -7,10 +7,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
-from django.middleware.csrf import get_token
-from django.views.decorators.csrf import csrf_protect, csrf_exempt, ensure_csrf_cookie
-from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from django.contrib.auth.hashers import make_password
 
 from .serializers import UserSerializer
 from .models import CustomUser
@@ -97,3 +95,31 @@ def reset_password_with_email(request):
             return JsonResponse({'error': 'Invalid JSON.'}, status=400)
     
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
+
+
+def reset_password(request, uidb64, token):
+    if request.method == "PUT":
+        try:
+            data = json.loads(request.body)
+            new_password = data.get('password')
+            
+            if not new_password:
+                return JsonResponse({'error': 'Password is required.'}, status=400)
+            
+            try:
+                user_id = urlsafe_base64_decode(uidb64).decode('utf-8')
+            except (TypeError, ValueError, OverflowError):
+                return JsonResponse({'error': 'Invalid user ID.'}, status=400)
+            
+            user = get_object_or_404(CustomUser, pk=user_id)
+            
+            if default_token_generator.check_token(user, token):
+                user.password = make_password(new_password)
+                user.save()
+                return JsonResponse({'message': 'Password has been reset successfully.'})
+            else:
+                return JsonResponse({'error': 'Invalid token or user ID.'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method.'}, status=405)
