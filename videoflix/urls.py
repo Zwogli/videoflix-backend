@@ -23,4 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')), # Django-allauth
     path('auth/', include('app_authentication.urls')),
-]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT),
+]
+
+
+# Füge die statischen Dateien nur im Entwicklungsmodus hinzu
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
