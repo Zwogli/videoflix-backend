@@ -6,4 +6,5 @@ class AppVideoflixConfig(AppConfig):
     name = 'app_videoflix'
     
     def ready(self):
-        from . import signals
+        print("AppVideoflixConfig ready method called.")
+        import app_videoflix.signals

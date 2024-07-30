@@ -1,9 +1,9 @@
-from .models import videos_global, videos_local
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from .models import GlobalVideo, LocalVideo
 
 
-@receiver(post_save, sender=videos_global)
+@receiver(post_save, sender=GlobalVideo)
 def video_global_post_save(sender, instance, created, **kwargs):
     print('Global Video wurde gespeichert.')
     if created:
@@ -12,7 +12,7 @@ def video_global_post_save(sender, instance, created, **kwargs):
         print('Global video updated.')
 
 
-@receiver(post_save, sender=videos_local)
+@receiver(post_save, sender=LocalVideo)
 def video_local_post_save(sender, instance, created, **kwargs):
     print('Local Video wurde gespeichert.')
     if created:
