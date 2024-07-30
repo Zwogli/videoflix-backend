@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app_videoflix',
+    'app_videoflix.apps.AppVideoflixConfig',
     'app_authentication',
     # django-allauth email verifikation:
     'django.contrib.sites',
