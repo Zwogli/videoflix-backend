@@ -18,12 +18,13 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
+from debug_toolbar.toolbar import debug_toolbar_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')), # Django-allauth
     path('auth/', include('app_authentication.urls')),
-]
+] + debug_toolbar_urls()
 
 
 # Füge die statischen Dateien nur im Entwicklungsmodus hinzu
