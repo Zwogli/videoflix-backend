@@ -80,15 +80,16 @@ def user_login(request):
     if request.method == "POST":
         try:
             data = utils.parse_request_body(request)
-            email, passwort = utils.extract_credentials(data)
+            email, password = utils.extract_credentials(data)
+            print('Backend login: ', email, password)
         
             if not email:
                 return utils.missing_field_response('email')
             
-            if not passwort:
+            if not password:
                 return utils.missing_field_response('email')
             
-            user = authenticate(request, email=email, password=passwort)
+            user = authenticate(request, email=email, password=password)
             
             if user is None:
                 return utils.invalid_credentials_response()

@@ -55,7 +55,7 @@ def parse_request_body(request):
 
 def extract_credentials(data):
     email = data.get('email')
-    password = data.get('passwort')
+    password = data.get('password')
     return email, password
 
 
