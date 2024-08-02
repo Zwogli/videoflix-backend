@@ -23,10 +23,17 @@ def video_global_post_delete(sender, instance, **kwargs):
     Deletes file from filessystem
     when corresponding `GlobalVideo` object is deleted
     """
-    if instance.file:
-        if os.path.isfile(instance.file.path):
-            os.remove(instance.file.path)
-            print('Global-video is deleted.')
+    video_path = instance.file.path
+    video_path_480p = video_path.replace('.mp4', '_480p.mp4')
+    video_path_720p = video_path.replace('.mp4', '_720p.mp4')
+    thumbnail_path = instance.thumbnail.path if instance.thumbnail else None
+    
+    delete_file(video_path)
+    delete_file(video_path_480p)
+    delete_file(video_path_720p)
+    delete_file(thumbnail_path)
+    
+    print('Global-video and associated files are deleted.')
 
 
 @receiver(post_save, sender=LocalVideo)
@@ -41,12 +48,25 @@ def video_local_post_save(sender, instance, created, **kwargs):
         
         
 @receiver(post_delete, sender=LocalVideo)
-def video_global_post_delete(sender, instance, **kwargs):
+def video_local_post_delete(sender, instance, **kwargs):
     """
     Deletes file from filessystem
     when corresponding `LocalVideo` object is deleted
     """
-    if instance.file:
-        if os.path.isfile(instance.file.path):
-            os.remove(instance.file.path)
-            print('Local-video is deleted.')
+    video_path = instance.file.path
+    video_path_480p = video_path.replace('.mp4', '_480p.mp4')
+    video_path_720p = video_path.replace('.mp4', '_720p.mp4')
+    thumbnail_path = instance.thumbnail.path if instance.thumbnail else None
+    
+    delete_file(video_path)
+    delete_file(video_path_480p)
+    delete_file(video_path_720p)
+    delete_file(thumbnail_path)
+    
+    print('Local-video and associated files are deleted.')
+            
+
+def delete_file(file_path):
+    if file_path and os.path.isfile(file_path):
+        os.remove(file_path)
+        print(f'File {file_path} deleted.')
