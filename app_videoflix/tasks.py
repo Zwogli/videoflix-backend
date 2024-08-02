@@ -22,7 +22,7 @@ def convert_720p(source, file_name):
 
 def createThumpnail(video_path, instance):
     thumbnail_path = video_path.replace('.mp4', '.jpg')
-    cmd = 'ffmpeg -i "{}" -ss 00:00:2.000 -vframes 1 "{}"'.format(video_path, thumbnail_path)
+    cmd = 'ffmpeg -i "{}" -ss 00:00:1.000 -vframes 1 "{}"'.format(video_path, thumbnail_path)
     subprocess.run(cmd)
     instance.thumbnail = thumbnail_path
     instance.save()

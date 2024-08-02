@@ -98,7 +98,7 @@ TEMPLATES = [
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-EDIA_URL = '/media/'
+MEDIA_URL = '/media/'
 
 WSGI_APPLICATION = 'videoflix.wsgi.application'
 
