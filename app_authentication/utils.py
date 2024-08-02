@@ -4,6 +4,9 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
+from django.http import JsonResponse
+
+import json
 
 def send_verification_email(user):
     token = default_token_generator.make_token(user)
@@ -43,4 +46,29 @@ def create_password_reset_message(user, reset_link):
     return render_to_string('reset_password_email.html',{
         'user': user,
         'reset_link': reset_link,
+    })
+    
+    
+def parse_request_body(request):
+    return json.loads(request.body)
+
+
+def extract_credentials(data):
+    email = data.get('email')
+    password = data.get('passwort')
+    return email, password
+
+
+def missing_field_response(field_name):
+    return JsonResponse({'error': f'{field_name.capitalize()} not provided.'}, status=400)
+
+
+def invalid_credentials_response():
+    return JsonResponse({'error': 'Invalid email or password.'}, status=401)
+
+
+def success_response(user):
+    return JsonResponse({
+        'success': 'User logged in successfully.',
+        'user_id': user.id
     })

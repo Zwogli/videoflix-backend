@@ -1,6 +1,5 @@
 from django.conf import settings
 from rest_framework import generics
-from django.http import JsonResponse
 from django.contrib.auth import get_user_model, authenticate, login
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
@@ -12,8 +11,7 @@ from django.contrib.auth.hashers import make_password
 
 from .serializers import UserSerializer
 from .models import CustomUser
-from .utils import send_verification_email
-from .utils import send_reset_password_email
+from . import utils
 
 import json
 
@@ -29,7 +27,7 @@ class UserCreateView(generics.CreateAPIView):
     
     def perform_create(self, serializer):
         user = serializer.save()
-        send_verification_email(user)
+        utils.send_verification_email(user)
         
         
 def verify_email(request, uidb64, token):
@@ -81,53 +79,28 @@ def user_login(request):
     """
     if request.method == "POST":
         try:
-            data = parse_request_body(request)
-            email, passwort = extract_credentials(data)
+            data = utils.parse_request_body(request)
+            email, passwort = utils.extract_credentials(data)
         
             if not email:
-                return missing_field_response('email')
+                return utils.missing_field_response('email')
             
             if not passwort:
-                return missing_field_response('email')
+                return utils.missing_field_response('email')
             
             user = authenticate(request, email=email, password=passwort)
             
             if user is None:
-                return invalid_credentials_response()
+                return utils.invalid_credentials_response()
             
             login(request, user)
-            return success_response(user)
+            return utils.success_response(user)
         
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON.'}, status=400)
 
     else:
         return JsonResponse({'error': 'Invalid request method.'}, status=405)
-    
-    
-def parse_request_body(request):
-    return json.loads(request.body)
-
-
-def extract_credentials(data):
-    email = data.get('email')
-    password = data.get('passwort')
-    return email, password
-
-
-def missing_field_response(field_name):
-    return JsonResponse({'error': f'{field_name.capitalize()} not provided.'}, status=400)
-
-
-def invalid_credentials_response():
-    return JsonResponse({'error': 'Invalid email or password.'}, status=401)
-
-
-def success_response(user):
-    return JsonResponse({
-        'success': 'User logged in successfully.',
-        'user_id': user.id
-    })
 
 
 def reset_password_with_email(request):
@@ -140,7 +113,7 @@ def reset_password_with_email(request):
             
             if email:
                 user = get_object_or_404(CustomUser, email=email)
-                send_reset_password_email(user)
+                utils.send_reset_password_email(user)
                 return JsonResponse({'message': 'Password reset link has been sent to your email.'})
             else:
                 return JsonResponse({'error': 'Email not provided.'}, status=400)
