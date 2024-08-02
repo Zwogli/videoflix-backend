@@ -5,6 +5,7 @@ class GlobalVideo(models.Model):
     description = models.TextField()
     upload_date = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to='global_videos/')
+    thumbnail = models.ImageField(upload_to='global_thumbnails/', blank=True, null=True)
 
     def __str__(self):
         return self.title

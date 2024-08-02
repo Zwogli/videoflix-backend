@@ -2,7 +2,7 @@ import os
 from django.dispatch import receiver
 from django.db.models.signals import post_save, post_delete
 
-from app_videoflix.tasks import convert
+from app_videoflix.tasks import convert, createThumpnail
 from .models import GlobalVideo, LocalVideo
 
 
@@ -10,7 +10,9 @@ from .models import GlobalVideo, LocalVideo
 def video_global_post_save(sender, instance, created, **kwargs):
     if created:
         print('New global video created.')
-        convert(instance.file.path)
+        video_path = instance.file.path
+        convert(video_path)
+        createThumpnail(video_path, instance)
     else:
         print('Global video updated.')
         
@@ -31,7 +33,9 @@ def video_global_post_delete(sender, instance, **kwargs):
 def video_local_post_save(sender, instance, created, **kwargs):
     if created:
         print('New local video created.')
-        convert(instance.file.path)
+        video_path = instance.file.path
+        convert(video_path)
+        createThumpnail(video_path, instance)
     else:
         print('Local video updated.')
         
