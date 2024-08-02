@@ -1,7 +1,7 @@
 from django.conf import settings
 from rest_framework import generics
 from django.http import JsonResponse
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import get_object_or_404
@@ -72,8 +72,62 @@ def is_valid_token(user, token):
     Returns:
     - True if the tokens match, otherwise False.
     """
-    return default_token_generator.check_token(user, token)    
+    return default_token_generator.check_token(user, token)
 
+
+def user_login(request):
+    """
+    Handles user login via POST request with email and password.
+    """
+    if request.method == "POST":
+        try:
+            data = parse_request_body(request)
+            email, passwort = extract_credentials(data)
+        
+            if not email:
+                return missing_field_response('email')
+            
+            if not passwort:
+                return missing_field_response('email')
+            
+            user = authenticate(request, email=email, password=passwort)
+            
+            if user is None:
+                return invalid_credentials_response()
+            
+            login(request, user)
+            return success_response(user)
+        
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON.'}, status=400)
+
+    else:
+        return JsonResponse({'error': 'Invalid request method.'}, status=405)
+    
+    
+def parse_request_body(request):
+    return json.loads(request.body)
+
+
+def extract_credentials(data):
+    email = data.get('email')
+    password = data.get('passwort')
+    return email, password
+
+
+def missing_field_response(field_name):
+    return JsonResponse({'error': f'{field_name.capitalize()} not provided.'}, status=400)
+
+
+def invalid_credentials_response():
+    return JsonResponse({'error': 'Invalid email or password.'}, status=401)
+
+
+def success_response(user):
+    return JsonResponse({
+        'success': 'User logged in successfully.',
+        'user_id': user.id
+    })
 
 
 def reset_password_with_email(request):
