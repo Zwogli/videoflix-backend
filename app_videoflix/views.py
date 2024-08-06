@@ -10,6 +10,7 @@ class GlobalVideoViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class LocalVideoViewSet(viewsets.ReadOnlyModelViewSet):
+    # ! Only load videos from user
     queryset = LocalVideo.objects.all()
     serializer_class = LocalVideoSerializer
 
