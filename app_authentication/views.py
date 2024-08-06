@@ -6,7 +6,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
-from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from django.contrib.auth.hashers import make_password
 
 from .serializers import UserSerializer
@@ -81,11 +81,9 @@ def user_login(request):
         try:
             data = utils.parse_request_body(request)
             email, password = utils.extract_credentials(data)
-            print('Backend login: ', email, password)
         
             if not email:
                 return utils.missing_field_response('email')
-            
             if not password:
                 return utils.missing_field_response('email')
             
@@ -95,7 +93,8 @@ def user_login(request):
                 return utils.invalid_credentials_response()
             
             login(request, user)
-            return utils.success_response(user)
+            token, created = Token.objects.get_or_create(user=user)
+            return JsonResponse({'token': token.key}, status=200)
         
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON.'}, status=400)
