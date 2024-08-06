@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')), # Django-allauth
     path('auth/', include('app_authentication.urls')),
+    path('api/videos/', include('app_videoflix.urls')),
 ] + debug_toolbar_urls()
 
 
