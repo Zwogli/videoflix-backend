@@ -8,4 +8,5 @@ router.register(r'local-videos', LocalVideoViewSet, basename='localvideo')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('upload/', UploadVideoView.as_view(), name='video-upload'),
 ]
