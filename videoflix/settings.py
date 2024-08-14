@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'debug_toolbar',
     "django_rq",
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -252,7 +253,7 @@ CORS_ALLOW_METHODS = [
 FRONTEND_URL = 'http://localhost:4200'
 
 
-#django_rq
+# django_rq
 
 RQ_QUEUES = {
     'default': {
@@ -264,3 +265,10 @@ RQ_QUEUES = {
         'DEFAULT_TIMEOUT': 360,
     },
 }
+
+
+# import-export
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/staticfiles')
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
