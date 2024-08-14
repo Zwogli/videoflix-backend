@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
+CACHE_TTL = 60 * 15 #60 seconds * 15
+
 
 # Application definition
 
@@ -51,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'debug_toolbar',
+    "django_rq",
 ]
 
 MIDDLEWARE = [
@@ -247,3 +250,20 @@ CORS_ALLOW_METHODS = [
 # URL
 
 FRONTEND_URL = 'http://localhost:4200'
+
+
+#django_rq
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'USERNAME': 'some-user',
+        'PASSWORD': 'foobared',
+        'DEFAULT_TIMEOUT': 360,
+        'REDIS_CLIENT_KWARGS': {    # Eventual additional Redis connection arguments
+            'ssl_cert_reqs': None,
+        },
+    },
+}

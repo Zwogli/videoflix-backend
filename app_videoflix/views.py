@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.conf import settings
+from django.views.decorators.cache import cache_page
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -6,6 +9,9 @@ from rest_framework import viewsets
 from .models import GlobalVideo, LocalVideo
 from .serializers import GlobalVideoSerializer, LocalVideoSerializer, LocalVideoUploadSerializer
 from rest_framework.permissions import IsAuthenticated
+
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 class GlobalVideoViewSet(viewsets.ReadOnlyModelViewSet):
