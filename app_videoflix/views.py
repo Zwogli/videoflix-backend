@@ -27,6 +27,7 @@ class LocalVideoViewSet(viewsets.ReadOnlyModelViewSet):
 
 class UploadVideoView(APIView):
     permission_classes = [IsAuthenticated]
+    
     def post(self, request, *args, **kwargs):
         serializer = LocalVideoUploadSerializer(data=request.data)
         if serializer.is_valid():
