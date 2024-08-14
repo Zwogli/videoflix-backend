@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import GlobalVideoViewSet, LocalVideoViewSet
+from .views import GlobalVideoViewSet, LocalVideoViewSet, UploadVideoView
 
 router = DefaultRouter()    #todo definition
 router.register(r'global-videos', GlobalVideoViewSet, basename='globalvideo')

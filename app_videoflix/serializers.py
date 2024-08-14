@@ -10,3 +10,13 @@ class LocalVideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = LocalVideo
         fields = ['id', 'title', 'description', 'thumbnail', 'file', 'uploaded_by']
+        
+        
+class LocalVideoUploadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LocalVideo
+        fields = ['title', 'description', 'file']  # Diese Felder werden erwartet
+
+    def create(self, validated_data):
+        # Erstellen und Speichern des neuen Videos
+        return LocalVideo.objects.create(**validated_data)

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
 from .models import GlobalVideo, LocalVideo
-from .serializers import GlobalVideoSerializer, LocalVideoSerializer
+from .serializers import GlobalVideoSerializer, LocalVideoSerializer, LocalVideoUploadSerializer
 from rest_framework.permissions import IsAuthenticated
 
 
