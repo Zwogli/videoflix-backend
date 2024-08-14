@@ -1,6 +1,8 @@
 import os
 from django.dispatch import receiver
 from django.db.models.signals import post_save, post_delete
+import django_rq
+from django_rq import enqueue
 
 from app_videoflix.tasks import convert, create_thumpnail
 from .models import GlobalVideo, LocalVideo
@@ -11,7 +13,10 @@ def video_global_post_save(sender, instance, created, **kwargs):
     if created:
         print('New global video created.')
         video_path = instance.file.path
-        convert(video_path)
+        queue = django_rq.get_queue('default', autocommit=True)
+        queue.enqueue(convert, video_path)
+        
+        # convert(video_path)
         create_thumpnail(video_path, instance, is_global=True)
     else:
         print('Global video updated.')
@@ -41,7 +46,9 @@ def video_local_post_save(sender, instance, created, **kwargs):
     if created:
         print('New local video created.')
         video_path = instance.file.path
-        convert(video_path)
+        queue = django_rq.get_queue('default', autocommit=True)
+        queue.enqueue(convert, video_path)
+        # convert(video_path)
         create_thumpnail(video_path, instance, is_global=False)
     else:
         print('Local video updated.')
