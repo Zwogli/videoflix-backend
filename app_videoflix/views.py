@@ -1,7 +1,4 @@
-from django.shortcuts import render
 from django.conf import settings
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -15,13 +12,12 @@ from rest_framework.permissions import IsAuthenticated
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
-@method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class GlobalVideoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = GlobalVideo.objects.all()
     serializer_class = GlobalVideoSerializer
 
 
-@method_decorator(cache_page(CACHE_TTL), name='dispatch')
+# @method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class LocalVideoViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = LocalVideoSerializer
     permission_classes = [IsAuthenticated]  # Ensures that the user must be authenticated to access the videos
