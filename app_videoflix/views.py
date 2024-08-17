@@ -17,7 +17,7 @@ class GlobalVideoViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = GlobalVideoSerializer
 
 
-class LocalVideoViewSet(viewsets.ReadOnlyModelViewSet):
+class LocalVideoViewSet(viewsets.ModelViewSet):
     serializer_class = LocalVideoSerializer
     permission_classes = [IsAuthenticated]  # Ensures that the user must be authenticated to access the videos
 
