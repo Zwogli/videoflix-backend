@@ -17,7 +17,6 @@ class GlobalVideoViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = GlobalVideoSerializer
 
 
-# @method_decorator(cache_page(CACHE_TTL), name='dispatch')
 class LocalVideoViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = LocalVideoSerializer
     permission_classes = [IsAuthenticated]  # Ensures that the user must be authenticated to access the videos
