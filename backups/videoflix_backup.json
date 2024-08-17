@@ -1,0 +1,60 @@
+[
+{
+    "model": "app_videoflix.globalvideo",
+    "pk": 23,
+    "fields": {
+        "title": "Affen",
+        "description": "Affen",
+        "upload_date": "2024-08-06T07:11:13.793Z",
+        "file": "global_videos/affen.mp4",
+        "thumbnail": "C:\\Dev\\backend\\08-videoflix\\videoflix-backend\\media\\global_thumbnails\\affen.jpg"
+    }
+},
+{
+    "model": "app_videoflix.globalvideo",
+    "pk": 29,
+    "fields": {
+        "title": "Löwen",
+        "description": "Löwen",
+        "upload_date": "2024-08-14T10:59:19.170Z",
+        "file": "global_videos/lion_drink_C6TldyD.mp4",
+        "thumbnail": "C:\\Dev\\backend\\08-videoflix\\videoflix-backend\\media\\global_thumbnails\\lion_drink_C6TldyD.jpg"
+    }
+},
+{
+    "model": "app_videoflix.localvideo",
+    "pk": 3,
+    "fields": {
+        "title": "Löwen",
+        "description": "EinVIdeo über Löwen",
+        "upload_date": "2024-08-14T09:36:49.164Z",
+        "file": "local_videos/lion_drink.mp4",
+        "uploaded_by": 22,
+        "thumbnail": "C:\\Dev\\backend\\08-videoflix\\videoflix-backend\\media\\local_thumbnails\\lion_drink.jpg"
+    }
+},
+{
+    "model": "app_videoflix.localvideo",
+    "pk": 4,
+    "fields": {
+        "title": "Elefanten",
+        "description": "Ein paar Elefanten",
+        "upload_date": "2024-08-14T09:41:25.391Z",
+        "file": "local_videos/elephant_drinking.mp4",
+        "uploaded_by": 22,
+        "thumbnail": "C:\\Dev\\backend\\08-videoflix\\videoflix-backend\\media\\local_thumbnails\\elephant_drinking.jpg"
+    }
+},
+{
+    "model": "app_videoflix.localvideo",
+    "pk": 5,
+    "fields": {
+        "title": "Erdmänchen",
+        "description": "Erdmänchen",
+        "upload_date": "2024-08-14T11:01:37.362Z",
+        "file": "local_videos/erdmaenchen.mp4",
+        "uploaded_by": 22,
+        "thumbnail": "C:\\Dev\\backend\\08-videoflix\\videoflix-backend\\media\\local_thumbnails\\erdmaenchen.jpg"
+    }
+}
+]

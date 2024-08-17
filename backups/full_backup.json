@@ -1,0 +1,100 @@
+[
+{
+    "model": "app_videoflix.globalvideo",
+    "pk": 23,
+    "fields": {
+        "title": "Affen",
+        "description": "Affen",
+        "upload_date": "2024-08-06T07:11:13.793Z",
+        "file": "global_videos/affen.mp4",
+        "thumbnail": "C:\\Dev\\backend\\08-videoflix\\videoflix-backend\\media\\global_thumbnails\\affen.jpg"
+    }
+},
+{
+    "model": "app_videoflix.globalvideo",
+    "pk": 29,
+    "fields": {
+        "title": "Löwen",
+        "description": "Löwen",
+        "upload_date": "2024-08-14T10:59:19.170Z",
+        "file": "global_videos/lion_drink_C6TldyD.mp4",
+        "thumbnail": "C:\\Dev\\backend\\08-videoflix\\videoflix-backend\\media\\global_thumbnails\\lion_drink_C6TldyD.jpg"
+    }
+},
+{
+    "model": "app_videoflix.localvideo",
+    "pk": 3,
+    "fields": {
+        "title": "Löwen",
+        "description": "EinVIdeo über Löwen",
+        "upload_date": "2024-08-14T09:36:49.164Z",
+        "file": "local_videos/lion_drink.mp4",
+        "uploaded_by": 22,
+        "thumbnail": "C:\\Dev\\backend\\08-videoflix\\videoflix-backend\\media\\local_thumbnails\\lion_drink.jpg"
+    }
+},
+{
+    "model": "app_videoflix.localvideo",
+    "pk": 4,
+    "fields": {
+        "title": "Elefanten",
+        "description": "Ein paar Elefanten",
+        "upload_date": "2024-08-14T09:41:25.391Z",
+        "file": "local_videos/elephant_drinking.mp4",
+        "uploaded_by": 22,
+        "thumbnail": "C:\\Dev\\backend\\08-videoflix\\videoflix-backend\\media\\local_thumbnails\\elephant_drinking.jpg"
+    }
+},
+{
+    "model": "app_videoflix.localvideo",
+    "pk": 5,
+    "fields": {
+        "title": "Erdmänchen",
+        "description": "Erdmänchen",
+        "upload_date": "2024-08-14T11:01:37.362Z",
+        "file": "local_videos/erdmaenchen.mp4",
+        "uploaded_by": 22,
+        "thumbnail": "C:\\Dev\\backend\\08-videoflix\\videoflix-backend\\media\\local_thumbnails\\erdmaenchen.jpg"
+    }
+}
+]
+[
+{
+    "model": "app_authentication.customuser",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$720000$XrWD9hIky0clR1IzpkA7EN$nx6lFDjW8S3yFjMD7zok7CWA/n15Anx7PzthRTs+1yY=",
+        "last_login": "2024-08-14T06:34:51.003Z",
+        "is_superuser": true,
+        "email": "mathiaskohler@web.de",
+        "user_name": "default_username",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_staff": true,
+        "is_verified": true,
+        "verification_expiry": "2024-07-16T06:39:18.669Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "app_authentication.customuser",
+    "pk": 22,
+    "fields": {
+        "password": "pbkdf2_sha256$720000$pvwE52DCgv3Lf1mVsuJ80o$FhQgTkhYV9qWonUK7EDhKV7KqJA8O9XiSGBc0IpVmwU=",
+        "last_login": "2024-08-14T06:35:04.316Z",
+        "is_superuser": false,
+        "email": "mathiaskohler@mail.de",
+        "user_name": "Test",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_staff": false,
+        "is_verified": true,
+        "verification_expiry": "2024-07-25T06:10:39.026Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
