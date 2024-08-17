@@ -18,6 +18,10 @@ class LocalVideoResource(resources.ModelResource):
 
 
 @admin.register(GlobalVideo)
+class GlobalVideoAdmin(ImportExportModelAdmin):
+    resource_class = GlobalVideoResource
+    
+    
 @admin.register(LocalVideo)
-class VideoAdmin(ImportExportModelAdmin):
-    pass
+class LocalVideoAdmin(ImportExportModelAdmin):
+    resource_class = LocalVideoResource
