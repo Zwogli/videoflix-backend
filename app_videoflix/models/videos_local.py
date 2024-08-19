@@ -8,6 +8,7 @@ class LocalVideo(models.Model):
     file = models.FileField(upload_to='local_videos/')
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     thumbnail = models.ImageField(upload_to='local_thumbnails/', blank=True, null=True)
+    is_local = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title

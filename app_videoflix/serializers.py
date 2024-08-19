@@ -4,12 +4,12 @@ from .models import GlobalVideo, LocalVideo
 class GlobalVideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = GlobalVideo
-        fields = ['id', 'title', 'description', 'thumbnail', 'file']
+        fields = ['id', 'title', 'description', 'thumbnail', 'file', 'is_local']
 
 class LocalVideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = LocalVideo
-        fields = ['id', 'title', 'description', 'thumbnail', 'file', 'uploaded_by']
+        fields = ['id', 'title', 'description', 'thumbnail', 'file', 'uploaded_by', 'is_local']
         
         
 class LocalVideoUploadSerializer(serializers.ModelSerializer):
