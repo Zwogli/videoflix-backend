@@ -32,3 +32,5 @@ After building my authentication, now I start with my main-feature. In the first
 -   Deleting file, all diffrent files from the same video must deleted
 -   Change video size by streaming, if the datastrem bad
 -   Automatic creation of a thumpnail when uploading
+
+## 4. Deployment
