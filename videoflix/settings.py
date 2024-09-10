@@ -233,10 +233,6 @@ CORS_ALLOWED_ORIGINS = [
     'https://videoflix.mathias-kohler.de',
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:4200',
-]
-
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = [
