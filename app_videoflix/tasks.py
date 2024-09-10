@@ -11,14 +11,34 @@ def convert(source):
 
 def convert_480p(source, file_name):
     target = file_name[0] + '_480p.mp4'
-    cmd = 'ffmpeg -i "{}" -s hd480 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target)    #{} sorce is set as a variable by the method .format(source, target)
-    subprocess.run(cmd)
+    # cmd = 'ffmpeg -i "{}" -s hd480 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target)    #{} sorce is set as a variable by the method .format(source, target)
+    cmd = [
+        'ffmpeg',
+        '-i', source,
+        '-s', 'hd480',
+        '-c:v', 'libx264',
+        '-crf', '23',
+        '-c:a', 'aac',
+        '-strict', '-2',
+        target
+    ]
+    subprocess.run(cmd, check=True) # check=True raises an exception if the command fails
     
     
 def convert_720p(source, file_name):
     target = file_name[0] + '_720p.mp4'
-    cmd = 'ffmpeg -i "{}" -s hd720 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target)    #{} sorce is set as a variable by the method .format(source, target)
-    subprocess.run(cmd)
+    # cmd = 'ffmpeg -i "{}" -s hd720 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target)    #{} sorce is set as a variable by the method .format(source, target)
+    cmd = [
+        'ffmpeg',
+        '-i', source,
+        '-s', 'hd720',
+        '-c:v', 'libx264',
+        '-crf', '23',
+        '-c:a', 'aac',
+        '-strict', '-2',
+        target
+    ]
+    subprocess.run(cmd, check=True) # check=True raises an exception if the command fails
     
 
 def create_thumpnail(video_path, instance, is_global):
