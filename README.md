@@ -31,6 +31,6 @@ After building my authentication, now I start with my main-feature. In the first
 -   Upstream should work in the backgrouund.
 -   Deleting file, all diffrent files from the same video must deleted
 -   Change video size by streaming, if the datastrem bad
--   Automatic creation of a thumpnail when uploading
+-   Automatic creation of a thumbnail when uploading
 
 ## 4. Deployment

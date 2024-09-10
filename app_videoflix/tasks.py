@@ -41,24 +41,31 @@ def convert_720p(source, file_name):
     subprocess.run(cmd, check=True) # check=True raises an exception if the command fails
     
 
-def create_thumpnail(video_path, instance, is_global):
-    thumbnail_path = set_thumpnail_path(video_path, is_global)
-    check_thumpnail_path(thumbnail_path)    
+def create_thumbnail(video_path, instance, is_global):
+    thumbnail_path = set_thumbnail_path(video_path, is_global)
+    check_thumbnail_path(thumbnail_path)    
         
-    cmd = 'ffmpeg -i "{}" -ss 00:00:1.000 -vframes 1 "{}"'.format(video_path, thumbnail_path)
-    subprocess.run(cmd)
+    # cmd = 'ffmpeg -i "{}" -ss 00:00:1.000 -vframes 1 "{}"'.format(video_path, thumbnail_path)
+    cmd = [
+        'ffmpeg',
+        '-i', video_path,
+        '-ss', '00:00:1.000',
+        '-vframes', '1',
+        thumbnail_path
+    ]
+    subprocess.run(cmd, check=True) # check=True raises an exception if the command fails
     instance.thumbnail = thumbnail_path
     instance.save()
     
 
-def set_thumpnail_path(video_path, is_global):
+def set_thumbnail_path(video_path, is_global):
     if is_global:
         return video_path.replace('.mp4', '.jpg').replace('global_videos', 'global_thumbnails')
     else:
         return video_path.replace('.mp4', '.jpg').replace('local_videos', 'local_thumbnails')
     
 
-def check_thumpnail_path(thumbnail_path):
+def check_thumbnail_path(thumbnail_path):
     thumbnail_dir = os.path.dirname(thumbnail_path)
     if not os.path.exists(thumbnail_dir):
         os.makedirs(thumbnail_dir)

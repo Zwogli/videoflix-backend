@@ -4,7 +4,7 @@ from django.db.models.signals import post_save, post_delete
 import django_rq
 from django_rq import enqueue
 
-from app_videoflix.tasks import convert, create_thumpnail
+from app_videoflix.tasks import convert, create_thumbnail
 from .models import GlobalVideo, LocalVideo
 
 
@@ -17,7 +17,7 @@ def video_global_post_save(sender, instance, created, **kwargs):
         queue.enqueue(convert, video_path)
         
         # convert(video_path)
-        create_thumpnail(video_path, instance, is_global=True)
+        create_thumbnail(video_path, instance, is_global=True)
     else:
         print('Global video updated.')
         
@@ -49,7 +49,7 @@ def video_local_post_save(sender, instance, created, **kwargs):
         queue = django_rq.get_queue('default', autocommit=True)
         queue.enqueue(convert, video_path)
         # convert(video_path)
-        create_thumpnail(video_path, instance, is_global=False)
+        create_thumbnail(video_path, instance, is_global=False)
     else:
         print('Local video updated.')
         
