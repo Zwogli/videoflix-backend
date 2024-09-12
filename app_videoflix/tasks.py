@@ -54,6 +54,7 @@ def create_thumbnail(video_path, instance, is_global):
         thumbnail_path
     ]
     subprocess.run(cmd, check=True) # check=True raises an exception if the command fails
+    print("Thumbnail Path: {thumbnail_path}")
     instance.thumbnail = thumbnail_path
     instance.save()
     
