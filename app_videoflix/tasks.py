@@ -44,7 +44,7 @@ def convert_720p(source, file_name):
 def create_thumbnail(video_path, instance, is_global):
     thumbnail_path = set_thumbnail_path(video_path, is_global)
     check_thumbnail_path(thumbnail_path)    
-    print("Thumbnail Path: {thumbnail_path}")
+    print(f"Thumbnail Path: {thumbnail_path}")
         
     # cmd = 'ffmpeg -i "{}" -ss 00:00:1.000 -vframes 1 "{}"'.format(video_path, thumbnail_path)
     cmd = [
