@@ -42,6 +42,7 @@ def convert_720p(source, file_name):
     
 
 def create_thumbnail(video_path, instance, is_global):
+    print(f"Video Path: {video_path}")
     thumbnail_path = set_thumbnail_path(video_path, is_global)
     check_thumbnail_path(thumbnail_path)    
     print(f"Thumbnail Path: {thumbnail_path}")
