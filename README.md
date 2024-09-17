@@ -34,3 +34,5 @@ After building my authentication, now I start with my main-feature. In the first
 -   Automatic creation of a thumbnail when uploading
 
 ## 4. Deployment
+
+I deployed on a Google Cloud VM on a Ubuntu System.
