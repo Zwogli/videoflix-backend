@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.decorators import api_view
 from .models import GlobalVideo, LocalVideo
 from .serializers import GlobalVideoSerializer, LocalVideoSerializer, LocalVideoUploadSerializer
 from rest_framework.permissions import IsAuthenticated
@@ -40,3 +41,10 @@ class UploadVideoView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['GET'])
+def thumbnail_status(request, video_id):
+    try:
+        video = LocalVideo.objects.get(id=video_id)
+        return Response({'thumbnailCreated': video.thumbnail_created})
+    except LocalVideo.DoesNotExist:
+        return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)
