@@ -46,10 +46,14 @@ def video_local_post_save(sender, instance, created, **kwargs):
     if created:
         print('New local video created.')
         video_path = instance.file.path
-        # queue = django_rq.get_queue('default', autocommit=True)
-        # queue.enqueue(convert, video_path)
-        convert(video_path)
-        create_thumbnail(video_path, instance, is_global=False)
+        file_name = video_path.split('.')
+        
+        queue = django_rq.get_queue('default', autocommit=True)
+        queue.enqueue(create_thumbnail, video_path, instance, is_global=False)
+        queue.enqueue(convert_480p, video_path, file_name)
+        queue.enqueue(convert_720p, video_path, file_name)
+        # convert(video_path)
+        # create_thumbnail(video_path, instance, is_global=False)
     else:
         print('Local video updated.')
         
