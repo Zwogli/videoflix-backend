@@ -49,7 +49,8 @@ def video_local_post_save(sender, instance, created, **kwargs):
         file_name = video_path.split('.')
         
         queue = django_rq.get_queue('default', autocommit=True)
-        queue.enqueue(create_thumbnail, video_path, instance, is_global=False)
+        create_thumbnail(video_path, instance, is_global=False)
+        # queue.enqueue(create_thumbnail, video_path, instance, is_global=False)
         queue.enqueue(convert_480p, video_path, file_name)
         queue.enqueue(convert_720p, video_path, file_name)
         # convert(video_path)
