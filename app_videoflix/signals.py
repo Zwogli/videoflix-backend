@@ -15,15 +15,9 @@ def video_global_post_save(sender, instance, created, **kwargs):
         video_path = instance.file.path
         queue = django_rq.get_queue('default', autocommit=True)
         file_name = video_path.split('.')
-        # convert_480p(video_path, file_name)
-        queue.enqueue(convert_480p, video_path, file_name)
-        # convert_720p(video_path, file_name)
-        queue.enqueue(convert_720p, video_path, file_name)
-        # queue.enqueue(convert, video_path)
-        
-        # convert(video_path)
-        # create_thumbnail(video_path, instance, is_global=True)
         queue.enqueue(create_thumbnail, video_path, instance, is_global=True)
+        queue.enqueue(convert_480p, video_path, file_name)
+        queue.enqueue(convert_720p, video_path, file_name)
     else:
         print('Global video updated.')
         

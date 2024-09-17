@@ -11,7 +11,6 @@ def convert(source):
 
 def convert_480p(source, file_name):
     target = file_name[0] + '_480p.mp4'
-    # cmd = 'ffmpeg -i "{}" -s hd480 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target)    #{} sorce is set as a variable by the method .format(source, target)
     cmd = [
         'ffmpeg',
         '-i', source,
@@ -27,7 +26,6 @@ def convert_480p(source, file_name):
     
 def convert_720p(source, file_name):
     target = file_name[0] + '_720p.mp4'
-    # cmd = 'ffmpeg -i "{}" -s hd720 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, target)    #{} sorce is set as a variable by the method .format(source, target)
     cmd = [
         'ffmpeg',
         '-i', source,
@@ -42,12 +40,8 @@ def convert_720p(source, file_name):
     
 
 def create_thumbnail(video_path, instance, is_global):
-    print(f"Video Path: {video_path}")
     thumbnail_path = set_thumbnail_path(video_path, is_global)
     check_thumbnail_path(thumbnail_path)    
-    print(f"Thumbnail Path: {thumbnail_path}")
-        
-    # cmd = 'ffmpeg -i "{}" -ss 00:00:1.000 -vframes 1 "{}"'.format(video_path, thumbnail_path)
     cmd = [
         'ffmpeg',
         '-i', video_path,
