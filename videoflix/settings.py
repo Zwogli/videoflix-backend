@@ -16,7 +16,8 @@ from videoflix.config import DATABASE_USER, DATABASE_PASSWORD
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+log_file_path = BASE_DIR / 'django.log'
+print(f"Log file path: {log_file_path}")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
