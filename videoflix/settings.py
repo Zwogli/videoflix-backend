@@ -277,18 +277,45 @@ RQ_QUEUES = {
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'file': {
-#             'level': 'DEBUG',
-#             'class': 'logging.FileHandler',
-#             'filename': '/path/to/your/django.log',
-#         },
-#     },
-#     'root': {
-#         'handlers': ['file'],
-#         'level': 'DEBUG',
-#     },
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{asctime} {levelname} {name} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',  # For the development environment
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+        'file': {
+            'level': 'INFO',  # For the production environment
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'django.log'),
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',  # Log level for Django-specific logs
+            'propagate': True,
+        },
+        'app_videoflix': {  # Your project-specific logger
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',  # Set INFO for production
+            'propagate': False,
+        },
+    }
+}
+
+if not DEBUG:  # Set to INFO in production
+    LOGGING['loggers']['app_videoflix']['level'] = 'INFO'
