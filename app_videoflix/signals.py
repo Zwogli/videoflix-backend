@@ -16,7 +16,7 @@ def get_file_name_without_extension(video_path):
     """
     Extracts the file name without the extension from the given video path.
     """
-    return video_path.rsplit('.', 1)[0]
+    return video_path.split('.')
 
 
 def queue_thumbnail_conversion(video_path, instance, is_global):
