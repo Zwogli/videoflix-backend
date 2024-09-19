@@ -85,12 +85,15 @@ def user_login(request):
             if not email:
                 return utils.missing_field_response('email')
             if not password:
-                return utils.missing_field_response('email')
+                return utils.missing_field_response('password')
             
             user = authenticate(request, email=email, password=password)
             
             if user is None:
                 return utils.invalid_credentials_response()
+            
+            if not user.is_verified:
+                return JsonResponse({'error': 'Email not verified.'}, status=403)
             
             login(request, user)
             token, created = Token.objects.get_or_create(user=user)
