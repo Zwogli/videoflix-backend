@@ -43,12 +43,14 @@ def send_reset_password_email(user):
     subject = 'Passwort zurücksetzen für Videoflix'
     message = create_password_reset_message(user, reset_link)
     
-    send_mail(
+    email = EmailMessage(
         subject,
         message,
         settings.DEFAULT_FROM_EMAIL,
         [user.email]
     )
+    email.content_subtype = "html"  # Specify that the email content is HTML
+    email.send()
     
 
 def create_password_reset_message(user, reset_link):
