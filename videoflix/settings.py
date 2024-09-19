@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
-from videoflix.config import DATABASE_USER, DATABASE_PASSWORD
+from videoflix.config import SECRET_KEY, DATABASE_USER, DATABASE_PASSWORD, EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_HOST
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +23,7 @@ print(f"Log file path: {log_file_path}")
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zw1c12y6frk-f%duc#m9kng=@bvw(%-%#-(4$#88=*mtrab%=t'
+SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -194,13 +194,13 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-""" EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'   # Only for development purposes
-EMAIL_HOST = 'smtp.example.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'   # Only for development purposes
+EMAIL_HOST = EMAIL_HOST #SMTP-Server adress
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your_email@example.com'
-EMAIL_HOST_PASSWORD = 'your_password' """
+EMAIL_HOST_USER = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 
 # Django allauth settings
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
