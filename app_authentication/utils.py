@@ -1,4 +1,4 @@
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -16,7 +16,16 @@ def send_verification_email(user):
     subject = 'Validierung der Email-Adresse für Videoflix'
     message = create_verification_message(user, verification_link)
     
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+    # send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+    
+    email = EmailMessage(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [user.email]
+    )
+    email.content_subtype = "html"  # Specify that the email content is HTML
+    email.send()
     
     
 def create_verification_message(user, verification_link):
