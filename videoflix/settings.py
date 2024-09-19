@@ -195,6 +195,7 @@ AUTHENTICATION_BACKENDS = (
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'videoflix@mathias-kohler.de'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'   # Only for development purposes
 EMAIL_HOST = EMAIL_HOST #SMTP-Server adress
 EMAIL_PORT = 587
