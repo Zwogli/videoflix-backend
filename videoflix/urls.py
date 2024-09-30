@@ -35,7 +35,7 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+    ]
 
 
 # Only add the static files in development mode (deploy in production via NGINX)
