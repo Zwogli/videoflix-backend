@@ -18,7 +18,7 @@ def send_verification_email(user):
     token = default_token_generator.make_token(user)
     user_id = urlsafe_base64_encode(force_bytes(user.pk)) # Encode the pk (primäry key)
     verification_link = f"{settings.FRONTEND_URL}/verification/{user_id}/{token}/" 
-    subject = 'Validierung der Email-Adresse für Videoflix'
+    subject = 'Validation of the email address for Videoflix'
     message = create_verification_message(user, verification_link)
     
     email = EmailMessage(
