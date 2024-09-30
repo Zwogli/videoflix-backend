@@ -1,7 +1,7 @@
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.http import JsonResponse
@@ -116,3 +116,15 @@ def success_response(user):
         'success': 'User logged in successfully.',
         'user_id': user.id
     })
+    
+
+def generate_verification_token(user):
+    """
+    Generates a uidb64 and token for the user.
+
+    :param user: The user instance.
+    :return: A tuple of (uidb64, token).
+    """
+    uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+    token = default_token_generator.make_token(user)
+    return uidb64, token
