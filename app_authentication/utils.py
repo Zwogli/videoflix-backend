@@ -9,14 +9,17 @@ from django.http import JsonResponse
 import json
 
 def send_verification_email(user):
+    """
+    Sends a verification email to the specified user.
+
+    Parameters:
+    - user: The user object to whom the verification email will be sent.
+    """
     token = default_token_generator.make_token(user)
-    user_id = urlsafe_base64_encode(force_bytes(user.pk)) # Encode the pk(primäry key)
-    verification_link = f"{settings.FRONTEND_URL}/verification/{user_id}/{token}/" #f"http://localhost:8000/auth/verify/{user_id}/{token}/"
-    
+    user_id = urlsafe_base64_encode(force_bytes(user.pk)) # Encode the pk (primäry key)
+    verification_link = f"{settings.FRONTEND_URL}/verification/{user_id}/{token}/" 
     subject = 'Validierung der Email-Adresse für Videoflix'
     message = create_verification_message(user, verification_link)
-    
-    # send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
     
     email = EmailMessage(
         subject,
@@ -29,6 +32,9 @@ def send_verification_email(user):
     
     
 def create_verification_message(user, verification_link):
+    """
+    Creates a verification email based on the user model and generates an individual verification link.
+    """
     return render_to_string('verification_email.html', {
         'user': user,
         'verification_link': verification_link,
@@ -36,6 +42,9 @@ def create_verification_message(user, verification_link):
     
     
 def send_reset_password_email(user):
+    """
+    Generates an email to reset the user password.
+    """
     token = default_token_generator.make_token(user)
     user_id = urlsafe_base64_encode(force_bytes(user.pk))
     reset_link = f"{settings.FRONTEND_URL}/reset-password/{user_id}/{token}"
@@ -54,6 +63,9 @@ def send_reset_password_email(user):
     
 
 def create_password_reset_message(user, reset_link):
+    """
+    Creates an email to reset the user password
+    """
     return render_to_string('reset_password_email.html',{
         'user': user,
         'reset_link': reset_link,
@@ -61,10 +73,31 @@ def create_password_reset_message(user, reset_link):
     
     
 def parse_request_body(request):
+    """
+    Parses the request body and returns it as a dictionary.
+
+    Parameters:
+    - request: The HTTP request object.
+
+    Returns:
+    - A dictionary representing the parsed JSON data.
+
+    Raises:
+    - ValueError: If the request body is not valid JSON.
+    """
     return json.loads(request.body)
 
 
 def extract_credentials(data):
+    """
+    Extracts email and password from the provided data dictionary.
+
+    Parameters:
+    - data: A dictionary containing user credentials.
+
+    Returns:
+    - A tuple containing the email and password.
+    """
     email = data.get('email')
     password = data.get('password')
     return email, password
