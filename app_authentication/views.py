@@ -1,11 +1,11 @@
 from django.conf import settings
-from rest_framework import generics
+from rest_framework import generics, status
 from django.contrib.auth import get_user_model, authenticate, login
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
+from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.hashers import make_password
 
@@ -24,26 +24,33 @@ class UserCreateView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = []
     
-    
     def perform_create(self, serializer):
         user = serializer.save()
         utils.send_verification_email(user)
         
         
 def verify_email(request, uidb64, token):
+    """
+    Verifies the user's email using the provided UID and token.
+
+    :param request: The HTTP request object.
+    :param uidb64: Base64 encoded user ID.
+    :param token: Token sent in the verification email.
+    :return: Response indicating the result of the verification process.
+    """
     user_id = urlsafe_base64_decode(uidb64).decode()
     user = get_object_or_404(CustomUser, pk=user_id)
     
     if is_verification_expired(user.verification_expiry):
         user.delete()
-        return HttpResponse('Verification link has expired and the account has been deleted.')
+        return Response({'message': 'Verification link has expired and the account has been deleted.'}, status=status.HTTP_410_GONE)
     
     if is_valid_token(user, token):
         user.is_verified = True
         user.save()
-        return HttpResponse('Your email has been verified.')
+        return Response({'message': 'Your email has been verified.'}, status=status.HTTP_200_OK)
     else:
-        return HttpResponse('Verification link is invalid or has expired.')
+        return Response({'error': 'Verification link is invalid or has expired.'}, status=status.HTTP_400_BAD_REQUEST)
     
     
 def is_verification_expired(expiry_time):
@@ -76,6 +83,9 @@ def is_valid_token(user, token):
 def user_login(request):
     """
     Handles user login via POST request with email and password.
+
+    :param request: The HTTP request object containing the user's credentials.
+    :return: Response with the authentication token or error message.
     """
     if request.method == "POST":
         try:
@@ -91,40 +101,43 @@ def user_login(request):
             
             if user is None:
                 return utils.invalid_credentials_response()
-            
             if not user.is_verified:
-                return JsonResponse({'error': 'Email not verified.'}, status=403)
+                return Response({'error': 'Email not verified.'}, status=status.HTTP_403_FORBIDDEN)
             
             login(request, user)
             token, created = Token.objects.get_or_create(user=user)
-            return JsonResponse({'token': token.key}, status=200)
-        
+            return Response({'token': token.key}, status=status.HTTP_200_OK)
         except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON.'}, status=400)
+            return Response({'error': 'Invalid JSON.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+    return Response({'error': 'Invalid request method.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    else:
-        return JsonResponse({'error': 'Invalid request method.'}, status=405)
 
 
 def reset_password_with_email(request):
-    print('Hello World')
+    """
+    Resets the user's password if the token is valid.
+
+    :param request: The HTTP request object containing the new password.
+    :param uidb64: Base64 encoded user ID.
+    :param token: Token for password reset validation.
+    :return: Response indicating the result of the password reset process.
+    """
     if request.method == 'POST':
         try:
             data = json.loads(request.body.decode('utf-8'))
             email = data.get('email')
-            print("Show email: ", email)
             
             if email:
                 user = get_object_or_404(CustomUser, email=email)
                 utils.send_reset_password_email(user)
-                return JsonResponse({'message': 'Password reset link has been sent to your email.'})
+                return Response({'message': 'Password reset link has been sent to your email.'}, status=status.HTTP_200_OK)
             else:
-                return JsonResponse({'error': 'Email not provided.'}, status=400)
-        
+                return Response({'error': 'Email not provided.'}, status=status.HTTP_400_BAD_REQUEST)
         except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON.'}, status=400)
+            return Response({'error': 'Invalid JSON.'}, status=status.HTTP_400_BAD_REQUEST)
     
-    return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    return Response({'error': 'Invalid request method.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 def reset_password(request, uidb64, token):
@@ -134,22 +147,18 @@ def reset_password(request, uidb64, token):
             new_password = data.get('password')
             
             if not new_password:
-                return JsonResponse({'error': 'Password is required.'}, status=400)
+                return Response({'error': 'Password is required.'}, status=status.HTTP_400_BAD_REQUEST)
             
-            try:
-                user_id = urlsafe_base64_decode(uidb64).decode('utf-8')
-            except (TypeError, ValueError, OverflowError):
-                return JsonResponse({'error': 'Invalid user ID.'}, status=400)
-            
+            user_id = urlsafe_base64_decode(uidb64).decode('utf-8')
             user = get_object_or_404(CustomUser, pk=user_id)
             
             if default_token_generator.check_token(user, token):
                 user.password = make_password(new_password)
                 user.save()
-                return JsonResponse({'message': 'Password has been reset successfully.'})
+                return Response({'message': 'Password has been reset successfully.'}, status=status.HTTP_200_OK)
             else:
-                return JsonResponse({'error': 'Invalid token or user ID.'}, status=400)
+                return Response({'error': 'Invalid token or user ID.'}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    return JsonResponse({'error': 'Invalid request method.'}, status=405)
+    return Response({'error': 'Invalid request method.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
