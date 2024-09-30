@@ -5,6 +5,9 @@ from .models import CustomUser
 
 # Register your models here.
 class CustomUserAdmin(UserAdmin, ImportExportModelAdmin):
+    """
+    Admin interface for managing CustomUser instances.
+    """
     model = CustomUser
     list_display = ('email', 'user_name', 'first_name', 'last_name', 'is_staff', 'is_active', 'is_verified')
     list_filter = ('is_staff', 'is_active')
@@ -21,5 +24,7 @@ class CustomUserAdmin(UserAdmin, ImportExportModelAdmin):
     )
     search_fields = ('email',)
     ordering = ('email',)
-
+    
+    
+# Register the CustomUser model with the CustomUserAdmin class
 admin.site.register(CustomUser, CustomUserAdmin)
