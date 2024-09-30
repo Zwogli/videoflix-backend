@@ -18,26 +18,26 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
-# from debug_toolbar.toolbar import debug_toolbar_urls
 import debug_toolbar
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')), # Django-allauth
-    path('auth/', include('app_authentication.urls')),
-    path('api/videos/', include('app_videoflix.urls')),
-    path('django-rq/', include('django_rq.urls'))
+    path('accounts/', include('allauth.urls')), # Django-allauth for user authentication and registration
+    path('auth/', include('app_authentication.urls')),  # Custom authentication app
+    path('api/videos/', include('app_videoflix.urls')), # API for video-related functionalities
+    path('django-rq/', include('django_rq.urls')) # django-rq for background task management
 ] + staticfiles_urlpatterns()
 
 
-# Füge die Debug Toolbar nur im Entwicklungsmodus hinzu
+# Add the debug toolbar only in development mode
 if settings.DEBUG:
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
 
 
-# Füge die statischen Dateien nur im Entwicklungsmodus hinzu
+# Only add the static files in development mode (deploy in production via NGINX)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
