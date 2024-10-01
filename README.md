@@ -13,8 +13,6 @@
 
 Videoflix is a backend for a Netflix clone that offers full registration, validation and verification. Users can watch global videos and upload their own videos to their account. Python and Django were used for the implementation.
 
-## Technologies
-
 <details>
 
 -   **Python**: Main programming language.
@@ -28,12 +26,16 @@ Videoflix is a backend for a Netflix clone that offers full registration, valida
 
 ## Utilisation
 
-The API offers various endpoints for interacting with the backend. Here are some examples:
+<details>
+
+<summary>The API offers various endpoints for interacting with the backend. Here are some examples:</summary>
 
 -   Registration: POST /api/register/
 -   Login: POST /api/login/
 -   Retrieve videos: GET /api/global-videos/
 -   Upload video: POST /api/local-videos/
+
+</details>
 
 ## 1. Decision making
 
@@ -53,9 +55,9 @@ The main functions of the project include
 
 The backend was deployed on a Google Cloud VM with Ubuntu. Here are some steps I followed:
 
-1. **Server configuration**: Installation and configuration of NGINX to deploy the API.
-2. **Database**: Setup of PostgreSQL and migration of the database.
-3. **Redis**: Configuration of Redis for caching and background processing.
-4. **Gunicorn**: Installation of Gunicorn as WSGI HTTP server to run the Django application.
-5. **Supervisor**: Installation of Supervisor to monitor and manage the Gunicorn process to ensure that the application is always available.
-6. **Security**: Setting up environment variables and access control.
+-   **Server configuration**: Installation and configuration of NGINX to deploy the API.
+-   **Database**: Setup of PostgreSQL and migration of the database.
+-   **Redis**: Configuration of Redis for caching and background processing.
+-   **Gunicorn**: Installation of Gunicorn as WSGI HTTP server to run the Django application.
+-   **Supervisor**: Installation of Supervisor to monitor and manage the Gunicorn process to ensure that the application is always available.
+-   **Security**: Setting up environment variables and access control.
