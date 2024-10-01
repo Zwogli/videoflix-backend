@@ -64,6 +64,14 @@ def convert_720p(source, file_name):
     
 
 def create_thumbnail(video_path, instance, is_global):
+    """
+    Creates a thumbnail for the video and saves the path in the instance.
+
+    Args:
+        video_path (str): The path to the video file.
+        instance (Model): The video model instance (GlobalVideo or LocalVideo).
+        is_global (bool): Indicates if the video is global or local.
+    """
     thumbnail_path = set_thumbnail_path(video_path, is_global)
     check_thumbnail_path(thumbnail_path)    
     cmd = [
@@ -73,11 +81,16 @@ def create_thumbnail(video_path, instance, is_global):
         '-vframes', '1',
         thumbnail_path
     ]
-    run_ffmpeg_command(cmd)
-    relative_thumbnail_path = os.path.relpath(thumbnail_path, 'media/')
-    instance.thumbnail = relative_thumbnail_path
-    instance.thumbnail_created = True
-    instance.save()
+    try:
+        run_ffmpeg_command(cmd)
+        relative_thumbnail_path = os.path.relpath(thumbnail_path, 'media/')
+        instance.thumbnail = relative_thumbnail_path
+        instance.thumbnail_created = True
+        instance.save()
+        logger.info(f'Thumbnail created and saved at {thumbnail_path}')
+    except subprocess.CalledProcessError:
+        logger.error(f'Failed to create thumbnail for {video_path}')
+        raise
     
 
 def set_thumbnail_path(video_path, is_global):
