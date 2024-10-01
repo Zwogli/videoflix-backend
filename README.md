@@ -13,13 +13,14 @@
 Videoflix is a backend for a Netflix clone that offers full registration, validation and verification. Users can watch global videos and upload their own videos to their account. Python and Django were used for the implementation.
 
 ## Technologies
-
+<details>
 -   **Python**: Main programming language.
 -   **Django**: Web framework for developing the backend.
 -   **Django REST Framework**: For creating RESTful APIs.
 -   **PostgreSQL**: Relational database for data storage.
 -   **Redis**: In-memory data structure store for caching.
 -   **FFmpeg**: Tool for video conversion.
+</details>
 
 ## Utilisation
 
