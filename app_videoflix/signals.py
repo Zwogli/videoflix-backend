@@ -23,7 +23,11 @@ def queue_thumbnail_conversion(video_path, instance, is_global):
     """
     Enqueues the task to create a thumbnail for the video.
     """
-    queue.enqueue(create_thumbnail, video_path, instance, is_global)
+    try:
+        queue.enqueue(create_thumbnail, video_path, instance, is_global)
+        logger.info(f'Thumbnail creation task enqueued for {video_path}.')
+    except Exception as e:
+        logger.error(f'Failed to enqueue thumbnail creation for {video_path}: {e}')
 
 
 def queue_video_resolution_conversion(video_path, file_name):
