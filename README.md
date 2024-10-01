@@ -1,10 +1,12 @@
 # Videoflix-backend
 
-## Inhaltsverzeichnis
-- [1. Projekt erstellen](#1-projekt-erstellen)
-- [2. Entscheidung: Erste App Authentifizierung](#2-entscheidung-erste-app-authentifizierung)
-- [3. Hauptfunktion](#3-hauptfunktion)
-- [4. Deployment](#4-deployment)
+## Table of contents
+- [Introduction](#Introduction)
+- [Technologies](#Technologies)
+- [Utilisation](#Utilisation)
+- [1. Decision making](#1-Decision-making)
+- [2. Main function](#2-Main-function)
+- [3. Deployment](#3-Deployment)
 
 ## Introduction
 
