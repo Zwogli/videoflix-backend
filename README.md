@@ -18,6 +18,7 @@ Videoflix is a backend for a Netflix clone that offers full registration, valida
 <details>
 
 <summary>List of technologies:</summary>
+<br>
 
 -   **Python**: Main programming language.
 -   **Django**: Web framework for developing the backend.
@@ -33,6 +34,7 @@ Videoflix is a backend for a Netflix clone that offers full registration, valida
 <details>
 
 <summary>The API offers various endpoints for interacting with the backend. Here are some examples:</summary>
+<br>
 
 -   Registration: POST /api/register/
 -   Login: POST /api/login/
@@ -48,9 +50,8 @@ In the first phase, I conceptualised the project and considered how I could divi
 ## 2. Main function
 
 <details>
-<summary>The main functions of the project include
-
-</summary>
+<summary>The main functions of the project include</summary>
+<br>
 
 -   Video model: Model for storing videos.
 -   Video conversion: Conversion of videos into different formats.
@@ -62,8 +63,8 @@ In the first phase, I conceptualised the project and considered how I could divi
 ## 3. Deployment
 
 <details>
-<summary>The backend was deployed on a Google Cloud VM with Ubuntu. Here are some steps I followed:
-</summary>
+<summary>The backend was deployed on a Google Cloud VM with Ubuntu. Here are some steps I followed:</summary>
+<br>
 
 -   **Server configuration**: Installation and configuration of NGINX to deploy the API.
 -   **Database**: Setup of PostgreSQL and migration of the database.
