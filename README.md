@@ -26,7 +26,7 @@ The API offers various endpoints for interacting with the backend. Here are some
 
 In the first phase, I conceptualised the project and considered how I could divide up the various tasks. The decision to implement authentication first was based on my previous experience with login processes.
 
-## 2. main function
+## 2. Main function
 
 The main functions of the project include
 
@@ -36,7 +36,7 @@ The main functions of the project include
 -   Thumbnail creation: Automatic generation of thumbnails when uploading.
 -   Deletion of files: Cleaning up all files of a video.
 
-## 3. deployment
+## 3. Deployment
 
 The backend was deployed on a Google Cloud VM with Ubuntu. Here are some steps I followed:
 
