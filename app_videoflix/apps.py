@@ -1,4 +1,8 @@
 from django.apps import AppConfig
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 class AppVideoflixConfig(AppConfig):
@@ -6,5 +10,5 @@ class AppVideoflixConfig(AppConfig):
     name = 'app_videoflix'
     
     def ready(self):
-        print("AppVideoflixConfig ready method called.")
+        logger.info("AppVideoflixConfig ready method called.")
         import app_videoflix.signals
