@@ -10,6 +10,13 @@ def mock_redis():
     """Mock Redis connection for tests."""
     with patch('django_rq.get_queue') as mock_queue:
         yield mock_queue
+        
+
+@pytest.fixture(autouse=True)
+def mock_rq():
+    """Mock RQ connection for tests."""
+    with patch('django_rq.get_queue') as mock_queue:
+        yield mock_queue
 
 
 @pytest.fixture
