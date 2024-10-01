@@ -1,5 +1,11 @@
 # Videoflix-backend
 
+## Inhaltsverzeichnis
+- [1. Projekt erstellen](#1-projekt-erstellen)
+- [2. Entscheidung: Erste App Authentifizierung](#2-entscheidung-erste-app-authentifizierung)
+- [3. Hauptfunktion](#3-hauptfunktion)
+- [4. Deployment](#4-deployment)
+
 ## Introduction
 
 Videoflix is a backend for a Netflix clone that offers full registration, validation and verification. Users can watch global videos and upload their own videos to their account. Python and Django were used for the implementation.
