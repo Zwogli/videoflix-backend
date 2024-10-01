@@ -22,7 +22,7 @@ def mock_rq():
 @pytest.fixture
 def user(db):
     User = get_user_model()
-    return User.objects.create_user(user_name='testuser', email='test@mail.com', password='testpassword')
+    return User.objects.create_user(email='unique_test@mail.com', password='testpassword')
 
 
 @pytest.fixture
