@@ -1,6 +1,10 @@
 import subprocess
 from .models import GlobalVideo, LocalVideo
 import os
+import logging
+
+
+logger = logging.getLogger('app_videoflix')
 
 
 def convert(source):
@@ -31,7 +35,7 @@ def convert_480p(source, file_name):
         '-strict', '-2',
         target
     ]
-    subprocess.run(cmd, check=True) # check=True raises an exception if the command fails
+    run_ffmpeg_command(cmd)
     
     
 def convert_720p(source, file_name):
@@ -56,7 +60,7 @@ def convert_720p(source, file_name):
         '-strict', '-2',
         target
     ]
-    subprocess.run(cmd, check=True) # check=True raises an exception if the command fails
+    run_ffmpeg_command(cmd)
     
 
 def create_thumbnail(video_path, instance, is_global):
@@ -69,7 +73,7 @@ def create_thumbnail(video_path, instance, is_global):
         '-vframes', '1',
         thumbnail_path
     ]
-    subprocess.run(cmd, check=True) # check=True raises an exception if the command fails
+    run_ffmpeg_command(cmd)
     relative_thumbnail_path = os.path.relpath(thumbnail_path, 'media/')
     instance.thumbnail = relative_thumbnail_path
     instance.thumbnail_created = True
@@ -87,3 +91,21 @@ def check_thumbnail_path(thumbnail_path):
     thumbnail_dir = os.path.dirname(thumbnail_path)
     if not os.path.exists(thumbnail_dir):
         os.makedirs(thumbnail_dir)
+        
+
+def run_ffmpeg_command(cmd):
+    """
+    Runs the given ffmpeg command and logs the operation.
+
+    Args:
+        cmd (list): The command to run using subprocess.
+
+    Raises:
+        subprocess.CalledProcessError: If the ffmpeg command fails.
+    """
+    try:
+        subprocess.run(cmd, check=True)
+        logger.info(f'FFmpeg command executed successfully: {" ".join(cmd)}')
+    except subprocess.CalledProcessError as e:
+        logger.error(f'FFmpeg command failed: {" ".join(cmd)}; Error: {e}')
+        raise
