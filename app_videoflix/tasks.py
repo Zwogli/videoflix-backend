@@ -101,9 +101,20 @@ def set_thumbnail_path(video_path, is_global):
     
 
 def check_thumbnail_path(thumbnail_path):
+    """
+    Ensures the directory for the thumbnail path exists, creating it if necessary.
+
+    Args:
+        thumbnail_path (str): The full path where the thumbnail will be saved.
+    """
     thumbnail_dir = os.path.dirname(thumbnail_path)
     if not os.path.exists(thumbnail_dir):
-        os.makedirs(thumbnail_dir)
+        try:
+            os.makedirs(thumbnail_dir)
+            logger.info(f'Directory created for thumbnail: {thumbnail_dir}')
+        except OSError as e:
+            logger.error(f'Failed to create directory {thumbnail_dir}: {e}')
+            raise
         
 
 def run_ffmpeg_command(cmd):
