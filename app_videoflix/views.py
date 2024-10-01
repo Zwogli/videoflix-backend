@@ -14,19 +14,37 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 class GlobalVideoViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    A viewset for viewing global videos.
+
+    This viewset allows only read-only access to global videos.
+
+    Attributes:
+        queryset: The list of GlobalVideo objects that are returned.
+        serializer_class: The serializer used to format GlobalVideo data.
+    """
     queryset = GlobalVideo.objects.all()
     serializer_class = GlobalVideoSerializer
 
 
 class LocalVideoViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for managing local videos.
+
+    This viewset allows authenticated users to create, retrieve, update, 
+    and delete local videos. Non-staff users can only see their own videos.
+    """
     serializer_class = LocalVideoSerializer
     permission_classes = [IsAuthenticated]  # Ensures that the user must be authenticated to access the videos
 
     def get_queryset(self):
-        # Only retrieve videos of the user currently logged in
-        user = self.request.user  # Get the currently logged in user
-        if user.is_staff:
-            return LocalVideo.objects.all() 
+        user = self.request.user  # Get the current user making the request
+        
+        # If the user is an admin (staff), return all local videos
+        if user.is_staff: 
+            return LocalVideo.objects.all()
+        
+        # Otherwise, return only the videos uploaded by the current user
         return LocalVideo.objects.filter(uploaded_by=user)
     
 
@@ -34,6 +52,21 @@ class UploadVideoView(APIView):
     permission_classes = [IsAuthenticated]
     
     def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests for uploading local videos.
+
+        This method processes the video upload request, validates it using the 
+        LocalVideoUploadSerializer, and assigns the current logged-in user as the uploader.
+
+        Args:
+            request: The HTTP request object containing the video data.
+            *args: Additional positional arguments.
+            **kwargs: Additional keyword arguments.
+
+        Returns:
+            Response: A response object containing the serializer data if successful, 
+            or the validation errors if not.
+        """
         serializer = LocalVideoUploadSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(uploaded_by=request.user)  # Saving the video with the currently logged in user
@@ -43,8 +76,23 @@ class UploadVideoView(APIView):
 
 @api_view(['GET'])
 def thumbnail_status(request, video_id):
+    """
+    Check the thumbnail creation status of a local video.
+
+    This function returns whether the thumbnail for the video with the given ID 
+    has been created.
+
+    Args:
+        request: The HTTP request object.
+        video_id (int): The ID of the video to check.
+
+    Returns:
+        Response: A JSON response with the thumbnail creation status or an error message 
+        if the video does not exist.
+    """
     try:
         video = LocalVideo.objects.get(id=video_id)
         return Response({'thumbnailCreated': video.thumbnail_created})
     except LocalVideo.DoesNotExist:
+        # Handle case where the video doesn't exist and return a 404 response
         return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)
