@@ -109,6 +109,15 @@ def video_local_post_delete(sender, instance, **kwargs):
       
             
 def delete_file(file_path):
+    """
+    Deletes the file at the specified file path from the filesystem.
+
+    Args:
+        file_path (str): The path to the file that should be deleted.
+
+    This function checks if the file exists before attempting to delete it
+    to prevent errors if the file is missing.
+    """
     if file_path and os.path.isfile(file_path):
         os.remove(file_path)
         print(f'File {file_path} deleted.')
