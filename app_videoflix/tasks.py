@@ -10,6 +10,16 @@ def convert(source):
 
 
 def convert_480p(source, file_name):
+    """
+    Converts the source video into 480p resolution using ffmpeg.
+
+    Args:
+        source (str): The path to the source video file.
+        file_name (list): The file name components split by '.' (used for naming the target file).
+
+    The function uses subprocess to call ffmpeg and transcode the video to 480p.
+    Raises an exception if the ffmpeg command fails.
+    """
     target = file_name[0] + '_480p.mp4'
     cmd = [
         'ffmpeg',
@@ -25,6 +35,16 @@ def convert_480p(source, file_name):
     
     
 def convert_720p(source, file_name):
+    """
+    Converts the source video into 720p resolution using ffmpeg.
+
+    Args:
+        source (str): The path to the source video file.
+        file_name (list): The file name components split by '.' (used for naming the target file).
+
+    The function uses subprocess to call ffmpeg and transcode the video to 720p.
+    Raises an exception if the ffmpeg command fails.
+    """
     target = file_name[0] + '_720p.mp4'
     cmd = [
         'ffmpeg',
