@@ -13,7 +13,11 @@
 
 Videoflix is a backend for a Netflix clone that offers full registration, validation and verification. Users can watch global videos and upload their own videos to their account. Python and Django were used for the implementation.
 
+## Technologies
+
 <details>
+
+<summary>List of technologies:</summary>
 
 -   **Python**: Main programming language.
 -   **Django**: Web framework for developing the backend.
@@ -43,17 +47,20 @@ In the first phase, I conceptualised the project and considered how I could divi
 
 ## 2. Main function
 
-The main functions of the project include
+<details>
+<summary>The main functions of the project include</summary>
 
 -   Video model: Model for storing videos.
 -   Video conversion: Conversion of videos into different formats.
 -   Backend processing: Background processing of uploads and conversions.
 -   Thumbnail creation: Automatic generation of thumbnails when uploading.
 -   Deletion of files: Cleaning up all files of a video.
+</details>
 
 ## 3. Deployment
 
-The backend was deployed on a Google Cloud VM with Ubuntu. Here are some steps I followed:
+<details>
+<summary>The backend was deployed on a Google Cloud VM with Ubuntu. Here are some steps I followed:</summary>
 
 -   **Server configuration**: Installation and configuration of NGINX to deploy the API.
 -   **Database**: Setup of PostgreSQL and migration of the database.
@@ -61,3 +68,5 @@ The backend was deployed on a Google Cloud VM with Ubuntu. Here are some steps I
 -   **Gunicorn**: Installation of Gunicorn as WSGI HTTP server to run the Django application.
 -   **Supervisor**: Installation of Supervisor to monitor and manage the Gunicorn process to ensure that the application is always available.
 -   **Security**: Setting up environment variables and access control.
+
+</details>
