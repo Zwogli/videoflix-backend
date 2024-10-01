@@ -119,5 +119,10 @@ def delete_file(file_path):
     to prevent errors if the file is missing.
     """
     if file_path and os.path.isfile(file_path):
-        os.remove(file_path)
-        print(f'File {file_path} deleted.')
+        try:
+            os.remove(file_path)
+            logger.info(f'File {file_path} deleted.')
+        except Exception as e:
+            logger.error(f'Error deleting file {file_path}: {e}')
+    else:
+        logger.warning(f'File {file_path} does not exist.')
