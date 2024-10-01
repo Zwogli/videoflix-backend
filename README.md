@@ -1,38 +1,48 @@
 # Videoflix-backend
 
-In this section of my project I create my backend for a Netflix clone with a working registration, validation and verification. It should also be possible to watch global videos and upload your own videos to your account.
-Python is used for my backend.
+## Introduction
 
-## 1. Creating the project
+Videoflix is a backend for a Netflix clone that offers full registration, validation and verification. Users can watch global videos and upload their own videos to their account. Python and Django were used for the implementation.
 
-In the first part, I created the project and thought about the fact that my backend has several tasks to manage, which I divided into individual apps.
-For version control, I decided to use GitHub and also created an online repository for my project.
+## Technologies
 
-## 2. the decision: First app authentication
+-   **Python**: Main programming language.
+-   **Django**: Web framework for developing the backend.
+-   **Django REST Framework**: For creating RESTful APIs.
+-   **PostgreSQL**: Relational database for data storage.
+-   **Redis**: In-memory data structure store for caching.
+-   **FFmpeg**: Tool for video conversion.
 
-There are many approaches that can and should be pursued. And yes, you should concentrate on your main feature first. However, many projects have a history and you have to make the best decision for yourself.
+## Utilisation
 
-As I had a clear vision of registration, login and validation in my frontend, this already existed. Now I was at a crossroads.
+The API offers various endpoints for interacting with the backend. Here are some examples:
 
-Do I take care of the logic to create and validate a user or do I deal with my main feature where I still lack a bit of confidence and overview?
+-   Registration: POST /api/register/
+-   Login: POST /api/login/
+-   Retrieve videos: GET /api/global-videos/
+-   Upload video: POST /api/local-videos/
 
-At this point, I decided in favour of creating the user. Why are you probably wondering? This has to do with my previous knowledge and personal judgement.
+## 1. Decision making
 
-Through my previous projects I had to deal with login processes over and over again. Although they were always slightly different, the basic concept and what to look out for felt familiar. Of course, in my current project I also had to do a lot of looking up, googling and working with ChatGpt, but I hoped to see tangible results more quickly.
+In the first phase, I conceptualised the project and considered how I could divide up the various tasks. The decision to implement authentication first was based on my previous experience with login processes.
 
-And I was right. I also used the time to realise my idea of my main feature.
+## 2. main function
 
-## 3. Main Feature
+The main functions of the project include
 
-After building my authentication, now I start with my main-feature. In the first step it was helpfull to realice what i should to do.
+-   Video model: Model for storing videos.
+-   Video conversion: Conversion of videos into different formats.
+-   Backend processing: Background processing of uploads and conversions.
+-   Thumbnail creation: Automatic generation of thumbnails when uploading.
+-   Deletion of files: Cleaning up all files of a video.
 
--   Creating video model. The focus was on creating a model in which you can save files.
--   Convert video files to diffrent sizes.
--   Upstream should work in the backgrouund.
--   Deleting file, all diffrent files from the same video must deleted
--   Change video size by streaming, if the datastrem bad
--   Automatic creation of a thumbnail when uploading
+## 3. deployment
 
-## 4. Deployment
+The backend was deployed on a Google Cloud VM with Ubuntu. Here are some steps I followed:
 
-I deployed on a Google Cloud VM on a Ubuntu System.
+1. **Server configuration**: Installation and configuration of NGINX to deploy the API.
+2. **Database**: Setup of PostgreSQL and migration of the database.
+3. **Redis**: Configuration of Redis for caching and background processing.
+4. **Gunicorn**: Installation of Gunicorn as WSGI HTTP server to run the Django application.
+5. **Supervisor**: Installation of Supervisor to monitor and manage the Gunicorn process to ensure that the application is always available.
+6. **Security**: Setting up environment variables and access control.
