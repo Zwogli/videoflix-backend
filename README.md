@@ -48,7 +48,9 @@ In the first phase, I conceptualised the project and considered how I could divi
 ## 2. Main function
 
 <details>
-<summary>The main functions of the project include</summary>
+<summary>The main functions of the project include
+
+</summary>
 
 -   Video model: Model for storing videos.
 -   Video conversion: Conversion of videos into different formats.
@@ -60,7 +62,8 @@ In the first phase, I conceptualised the project and considered how I could divi
 ## 3. Deployment
 
 <details>
-<summary>The backend was deployed on a Google Cloud VM with Ubuntu. Here are some steps I followed:</summary>
+<summary>The backend was deployed on a Google Cloud VM with Ubuntu. Here are some steps I followed:
+</summary>
 
 -   **Server configuration**: Installation and configuration of NGINX to deploy the API.
 -   **Database**: Setup of PostgreSQL and migration of the database.
