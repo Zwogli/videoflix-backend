@@ -1,4 +1,3 @@
-"""
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.urls import reverse
 from rest_framework import status
@@ -10,7 +9,11 @@ import io
 
 class GlobalVideoViewSetTests(APITestCase):
     def setUp(self):
-        self.user = CustomUser.objects.create_user(email='unique_test@mail.com', password='testpassword')
+        # Erstelle einen Admin-Benutzer
+        self.admin_user = CustomUser.objects.create_superuser(
+            email='admin@mail.com',
+            password='testpassword'
+        )
 
         # Simuliere eine Datei für den Upload
         file = io.BytesIO(b'Test video content')  # Erstelle einen BytesIO-Stream
@@ -25,9 +28,11 @@ class GlobalVideoViewSetTests(APITestCase):
         )
 
     def test_get_global_videos(self):
-        url = reverse('globalvideo')
+        # Melde den Admin-Benutzer an
+        self.client.login(email='admin@mail.com', password='testpassword')
+        
+        url = reverse('globalvideo-list')  # Verwende den Namen für die Liste
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['title'], self.global_video.title)
-"""

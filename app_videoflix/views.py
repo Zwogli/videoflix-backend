@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from rest_framework import status, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from rest_framework import viewsets
+from rest_framework.permissions import IsAdminUser
 from rest_framework.decorators import api_view
 from .models import GlobalVideo, LocalVideo
 from .serializers import GlobalVideoSerializer, LocalVideoSerializer, LocalVideoUploadSerializer
@@ -25,6 +25,7 @@ class GlobalVideoViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = GlobalVideo.objects.all()
     serializer_class = GlobalVideoSerializer
+    permission_classes = [IsAdminUser]
 
 
 class LocalVideoViewSet(viewsets.ModelViewSet):
