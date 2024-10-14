@@ -1,3 +1,5 @@
+"""
+>>>>>>> a765a6e05f496261537b837f6f9423683b4f4621
 import pytest
 from ..models import GlobalVideo, LocalVideo
 
@@ -25,4 +27,8 @@ def test_file_upload(global_video):
     assert global_video.file.name == 'global_videos/test_video.mp4'
 
 def test_file_upload_local_video(local_video):
+<<<<<<< HEAD
     assert local_video.file.name == 'local_videos/test_local_video.mp4'
+=======
+    assert local_video.file.name == 'local_videos/test_local_video.mp4'
+"""

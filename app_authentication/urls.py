@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import UserCreateView, verify_email, reset_password_with_email, reset_password, user_login
-from .test_mail import send_test_email
+from .tests.test_mail import send_test_email
 
 urlpatterns = [
     path('registration/', UserCreateView.as_view(), name='user-create'),

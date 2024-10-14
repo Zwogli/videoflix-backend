@@ -2,9 +2,10 @@ import pytest
 from django.urls import reverse
 from django.core import mail
 
-from .models import CustomUser
-from .utils import send_verification_email
-from .serializers import UserSerializer
+from ..models import CustomUser
+from ..utils import send_verification_email
+from ..serializers import UserSerializer
+
 
 @pytest.mark.django_db
 class TestCustomUser:

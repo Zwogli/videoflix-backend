@@ -1,38 +1,76 @@
 # Videoflix-backend
 
-In this section of my project I create my backend for a Netflix clone with a working registration, validation and verification. It should also be possible to watch global videos and upload your own videos to your account.
-Python is used for my backend.
+## Table of contents
 
-## 1. Creating the project
+-   [Introduction](#Introduction)
+-   [Technologies](#Technologies)
+-   [Utilisation](#Utilisation)
+-   [1. Decision making](#1-Decision-making)
+-   [2. Main function](#2-Main-function)
+-   [3. Deployment](#3-Deployment)
 
-In the first part, I created the project and thought about the fact that my backend has several tasks to manage, which I divided into individual apps.
-For version control, I decided to use GitHub and also created an online repository for my project.
+## Introduction
 
-## 2. the decision: First app authentication
+Videoflix is a backend for a Netflix clone that offers full registration, validation and verification. Users can watch global videos and upload their own videos to their account. Python and Django were used for the implementation.
 
-There are many approaches that can and should be pursued. And yes, you should concentrate on your main feature first. However, many projects have a history and you have to make the best decision for yourself.
+## Technologies
 
-As I had a clear vision of registration, login and validation in my frontend, this already existed. Now I was at a crossroads.
+<details>
 
-Do I take care of the logic to create and validate a user or do I deal with my main feature where I still lack a bit of confidence and overview?
+<summary>List of technologies:</summary>
+<br>
 
-At this point, I decided in favour of creating the user. Why are you probably wondering? This has to do with my previous knowledge and personal judgement.
+-   **Python**: Main programming language.
+-   **Django**: Web framework for developing the backend.
+-   **Django REST Framework**: For creating RESTful APIs.
+-   **PostgreSQL**: Relational database for data storage.
+-   **Redis**: In-memory data structure store for caching.
+-   **FFmpeg**: Tool for video conversion.
 
-Through my previous projects I had to deal with login processes over and over again. Although they were always slightly different, the basic concept and what to look out for felt familiar. Of course, in my current project I also had to do a lot of looking up, googling and working with ChatGpt, but I hoped to see tangible results more quickly.
+</details>
 
-And I was right. I also used the time to realise my idea of my main feature.
+## Utilisation
 
-## 3. Main Feature
+<details>
 
-After building my authentication, now I start with my main-feature. In the first step it was helpfull to realice what i should to do.
+<summary>The API offers various endpoints for interacting with the backend. Here are some examples:</summary>
+<br>
 
--   Creating video model. The focus was on creating a model in which you can save files.
--   Convert video files to diffrent sizes.
--   Upstream should work in the backgrouund.
--   Deleting file, all diffrent files from the same video must deleted
--   Change video size by streaming, if the datastrem bad
--   Automatic creation of a thumbnail when uploading
+-   Registration: POST /api/register/
+-   Login: POST /api/login/
+-   Retrieve videos: GET /api/global-videos/
+-   Upload video: POST /api/local-videos/
 
-## 4. Deployment
+</details>
 
-I deployed on a Google Cloud VM on a Ubuntu System.
+## 1. Decision making
+
+In the first phase, I conceptualised the project and considered how I could divide up the various tasks. The decision to implement authentication first was based on my previous experience with login processes.
+
+## 2. Main function
+
+<details>
+<summary>The main functions of the project include</summary>
+<br>
+
+-   Video model: Model for storing videos.
+-   Video conversion: Conversion of videos into different formats.
+-   Backend processing: Background processing of uploads and conversions.
+-   Thumbnail creation: Automatic generation of thumbnails when uploading.
+-   Deletion of files: Cleaning up all files of a video.
+</details>
+
+## 3. Deployment
+
+<details>
+<summary>The backend was deployed on a Google Cloud VM with Ubuntu. Here are some steps I followed:</summary>
+<br>
+
+-   **Server configuration**: Installation and configuration of NGINX to deploy the API.
+-   **Database**: Setup of PostgreSQL and migration of the database.
+-   **Redis**: Configuration of Redis for caching and background processing.
+-   **Gunicorn**: Installation of Gunicorn as WSGI HTTP server to run the Django application.
+-   **Supervisor**: Installation of Supervisor to monitor and manage the Gunicorn process to ensure that the application is always available.
+-   **Security**: Setting up environment variables and access control.
+
+</details>

@@ -10,12 +10,19 @@ def mock_redis():
     """Mock Redis connection for tests."""
     with patch('django_rq.get_queue') as mock_queue:
         yield mock_queue
+        
+
+@pytest.fixture(autouse=True)
+def mock_rq():
+    """Mock RQ connection for tests."""
+    with patch('django_rq.get_queue') as mock_queue:
+        yield mock_queue
 
 
 @pytest.fixture
 def user(db):
     User = get_user_model()
-    return User.objects.create_user(user_name='testuser', email='test@mail.com', password='testpassword')
+    return User.objects.create_user(email='unique_test@mail.com', password='testpassword')
 
 
 @pytest.fixture
