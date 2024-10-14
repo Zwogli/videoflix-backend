@@ -23,7 +23,11 @@ def queue_thumbnail_conversion(video_path, instance, is_global):
     """
     Enqueues the task to create a thumbnail for the video.
     """
-    queue.enqueue(create_thumbnail, video_path, instance, is_global)
+    try:
+        queue.enqueue(create_thumbnail, video_path, instance, is_global)
+        logger.info(f'Thumbnail creation task enqueued for {video_path}.')
+    except Exception as e:
+        logger.error(f'Failed to enqueue thumbnail creation for {video_path}: {e}')
 
 
 def queue_video_resolution_conversion(video_path, file_name):
@@ -109,6 +113,20 @@ def video_local_post_delete(sender, instance, **kwargs):
       
             
 def delete_file(file_path):
+    """
+    Deletes the file at the specified file path from the filesystem.
+
+    Args:
+        file_path (str): The path to the file that should be deleted.
+
+    This function checks if the file exists before attempting to delete it
+    to prevent errors if the file is missing.
+    """
     if file_path and os.path.isfile(file_path):
-        os.remove(file_path)
-        print(f'File {file_path} deleted.')
+        try:
+            os.remove(file_path)
+            logger.info(f'File {file_path} deleted.')
+        except Exception as e:
+            logger.error(f'Error deleting file {file_path}: {e}')
+    else:
+        logger.warning(f'File {file_path} does not exist.')
