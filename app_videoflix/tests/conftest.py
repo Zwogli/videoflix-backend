@@ -8,8 +8,10 @@ from ..models import GlobalVideo, LocalVideo
 @pytest.fixture(autouse=True)
 def mock_redis():
     """Mock Redis connection for tests."""
-    with patch('django_rq.get_queue') as mock_queue:
-        yield mock_queue
+    with patch('redis.StrictRedis') as mock_redis:
+        mock_instance = mock_redis.return_value
+        mock_instance.get.return_value = None  # Stelle sicher, dass Aufrufe zu Redis immer einen Mock-Wert zurückgeben
+        yield mock_redis
         
 
 @pytest.fixture(autouse=True)

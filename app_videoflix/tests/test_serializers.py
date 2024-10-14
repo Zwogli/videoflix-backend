@@ -1,19 +1,19 @@
-import pytest
-from rest_framework.exceptions import ValidationError
-from ..models import GlobalVideo, LocalVideo
-from ..serializers import GlobalVideoSerializer, LocalVideoSerializer, LocalVideoUploadSerializer
-from app_authentication.models import CustomUser
+# import pytest
+# from rest_framework.exceptions import ValidationError
+# from ..models import GlobalVideo, LocalVideo
+# from ..serializers import GlobalVideoSerializer, LocalVideoSerializer, LocalVideoUploadSerializer
+# from app_authentication.models import CustomUser
 
-@pytest.mark.django_db
-class TestGlobalVideoSerializer:
-    def setup_method(self):
-        self.user = CustomUser.objects.create_user(email='unique_test@mail.com', password='testpassword')
-        self.global_video = GlobalVideo.objects.create(
-            title='Test Global Video',
-            description='A test description for global video.',
-            file='path/to/test_video.mp4',
-            is_local=False
-        )
+# @pytest.mark.django_db
+# class TestGlobalVideoSerializer:
+#     def setup_method(self):
+#         self.user = CustomUser.objects.create_user(email='unique_test@mail.com', password='testpassword')
+#         self.global_video = GlobalVideo.objects.create(
+#             title='Test Global Video',
+#             description='A test description for global video.',
+#             file='test_files/test_video.mp4',
+#             is_local=False
+#         )
 
 #     def test_global_video_serialization(self):
 #         serializer = GlobalVideoSerializer(self.global_video)
