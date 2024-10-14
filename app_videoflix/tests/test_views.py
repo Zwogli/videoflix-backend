@@ -1,37 +1,34 @@
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from ..models import GlobalVideo
 from app_authentication.models import CustomUser
 import io
+from django.urls import reverse
+from .utils import create_dummy_file
 
 
 class GlobalVideoViewSetTests(APITestCase):
     def setUp(self):
-        # Erstelle einen Admin-Benutzer
+        # Create admin-user
         self.admin_user = CustomUser.objects.create_superuser(
             email='admin@mail.com',
             password='testpassword'
         )
 
-        # Simuliere eine Datei für den Upload
-        file = io.BytesIO(b'Test video content')  # Erstelle einen BytesIO-Stream
-        file.name = 'test_video.mp4'  # Setze den Dateinamen
-        uploaded_file = InMemoryUploadedFile(file, None, file.name, 'video/mp4', file.getbuffer().nbytes, None)
+        uploaded_file = create_dummy_file(file_name='new_local_video.mp4')
 
-        # Erstelle das GlobalVideo-Objekt mit der simulierten Datei
+        # Creates a global-video with dummy-data
         self.global_video = GlobalVideo.objects.create(
             title='Test Global Video',
             description='A test description for global video.',
-            file=uploaded_file  # Setze die Datei
+            file=uploaded_file
         )
 
     def test_get_global_videos(self):
-        # Melde den Admin-Benutzer an
         self.client.login(email='admin@mail.com', password='testpassword')
         
-        url = reverse('globalvideo-list')  # Verwende den Namen für die Liste
+        url = reverse('globalvideo-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
