@@ -78,7 +78,8 @@ class LocalVideoViewSetTests(APITestCase):
         data = {
             'title': 'Updated Title',
             'description': 'Updated description',
-            'file': uploaded_file  # Setze die Dummy-Datei
+            'file': uploaded_file,  # Setze die Dummy-Datei
+            'uploaded_by': self.user.id
         }
         response = self.client.put(url, data, format='multipart')
 
