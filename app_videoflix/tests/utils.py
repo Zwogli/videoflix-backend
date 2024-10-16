@@ -30,3 +30,17 @@ def create_video_data(user, file_name='local_video.mp4'):
         'file': uploaded_file,
         'uploaded_by': user.id
     }
+    
+
+def get_video_upload_data(uploaded_file):
+    """
+    Create test data for video upload.
+
+    :param uploaded_file: The uploaded video file.
+    :return: A dictionary with video upload data.
+    """
+    return {
+        'title': 'Test Video',
+        'description': 'A test video upload.',
+        'file': uploaded_file
+    }
