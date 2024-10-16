@@ -5,7 +5,7 @@ from ..models import GlobalVideo, LocalVideo
 from app_authentication.models import CustomUser
 import io
 from django.urls import reverse
-from .utils import create_dummy_file
+from .utils import create_dummy_file, create_video_data
 
 
 class GlobalVideoViewSetTests(APITestCase):
@@ -25,6 +25,7 @@ class GlobalVideoViewSetTests(APITestCase):
             file=uploaded_file
         )
 
+
     def test_get_global_videos(self):
         self.client.login(email='admin@mail.com', password='testpassword')
         
@@ -42,23 +43,16 @@ class LocalVideoViewSetTests(APITestCase):
 
         self.client.login(email='user@mail.com', password='testpassword')
 
-    def test_create_local_video(self):
-        uploaded_file = create_dummy_file(file_name='local_video.mp4')
 
+    def test_create_local_video(self):
         url = reverse('localvideo-list')
-        data = {
-            'title': 'New Local Video',
-            'description': 'Description of new local video',
-            'file': uploaded_file
-        }
+        data = create_video_data(self.user)
         response = self.client.post(url, data, format='multipart')
-        
-        if response.status_code != status.HTTP_201_CREATED:
-            print('Test respond', response.data)
         
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(LocalVideo.objects.count(), 1)
         self.assertEqual(LocalVideo.objects.get().title, 'New Local Video')
+
 
     def test_get_local_videos(self):
         # Erstelle ein lokales Video
@@ -72,6 +66,7 @@ class LocalVideoViewSetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)  # Überprüfe, ob das Video abgerufen wird
         self.assertEqual(response.data[0]['title'], 'Local Video')
+
 
     def test_update_local_video(self):
         # Erstelle ein lokales Video
@@ -90,6 +85,7 @@ class LocalVideoViewSetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         local_video.refresh_from_db()  # Aktualisiere das lokale Video-Objekt aus der DB
         self.assertEqual(local_video.title, 'Updated Title')  # Überprüfe, ob der Titel aktualisiert wurde
+
 
     def test_delete_local_video(self):
         # Erstelle ein lokales Video
