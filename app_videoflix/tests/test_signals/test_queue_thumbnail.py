@@ -6,7 +6,6 @@ from app_videoflix.models import LocalVideo
 from app_videoflix.signals import queue_thumbnail_conversion
 from app_videoflix.tasks import create_thumbnail
 
-
 @pytest.mark.django_db  # Stelle sicher, dass die Tests auf die Datenbank zugreifen können
 class ThumbnailConversionTests:
 
