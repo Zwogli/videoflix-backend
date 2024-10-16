@@ -5,7 +5,7 @@ from rest_framework.exceptions import ValidationError
 from ..models import GlobalVideo, LocalVideo
 from ..serializers import GlobalVideoSerializer, LocalVideoSerializer, LocalVideoUploadSerializer
 from app_authentication.models import CustomUser
-from .utils import create_dummy_file
+from .utils import create_dummy_file, get_video_upload_data
 
 
 @pytest.mark.django_db
@@ -59,16 +59,11 @@ class TestLocalVideoUploadSerializer:
 
     def test_upload_serializer(self):
         uploaded_file = create_dummy_file(file_name='new_local_video.mp4')
-        
-        data = {
-            'title': 'New Local Video',
-            'description': 'Description of new local video',
-            'file': uploaded_file 
-        }
+        data = get_video_upload_data(uploaded_file)
+
         serializer = LocalVideoUploadSerializer(data=data)
-        # assert serializer.is_valid(), serializer.errors
+
         assert serializer.is_valid()  # Check whether the serialiser data is valid
-        
         local_video = serializer.save(uploaded_by=self.user)  # Add user
         assert local_video.title == data['title']
         assert local_video.description == data['description']
