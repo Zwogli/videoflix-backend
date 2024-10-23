@@ -5,6 +5,7 @@
 -   [Introduction](#Introduction)
 -   [Technologies](#Technologies)
 -   [Utilisation](#Utilisation)
+-   [Configuration](#Configuration)
 -   [Testing](#Testing)
 -   [1. Decision making](#1-Decision-making)
 -   [2. Main function](#2-Main-function)
@@ -43,6 +44,26 @@ Videoflix is a backend for a Netflix clone that offers full registration, valida
 -   Upload video: POST /api/local-videos/
 
 </details>
+
+```markdown
+## Configuration
+
+Sensitive information such as passwords and API keys are stored in a separate configuration file (`config.py`), which is listed in the `.gitignore` file to prevent it from being committed to version control. For enhanced security, it is recommended to use environment variables or a dedicated secrets management service. 
+
+### Example of Environment Variables
+
+Instead of hardcoding sensitive information, you can set environment variables like this:
+
+```bash
+SECRET_KEY = 'your_SECRET_KEY'
+
+DATABASE_USER = 'your_DATABASE_USER'
+DATABASE_PASSWORD = 'your_DATABASE_PASSWORD'
+
+EMAIL_HOST = 'your_EMAIL_HOST'
+EMAIL_HOST_USER = 'your_EMAIL_HOST_USER'
+EMAIL_HOST_PASSWORD = 'your_EMAIL_HOST_PASSWORD'
+```
 
 ## Testing
 
