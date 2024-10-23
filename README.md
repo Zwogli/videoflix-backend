@@ -5,7 +5,7 @@
 -   [Introduction](#Introduction)
 -   [Technologies](#Technologies)
 -   [Utilisation](#Utilisation)
--   [Testing](# Testing)
+-   [Testing](#Testing)
 -   [1. Decision making](#1-Decision-making)
 -   [2. Main function](#2-Main-function)
 -   [3. Deployment](#3-Deployment)
