@@ -45,7 +45,6 @@ Videoflix is a backend for a Netflix clone that offers full registration, valida
 
 </details>
 
-```markdown
 ## Configuration
 
 Sensitive information such as passwords and API keys are stored in a separate configuration file (`config.py`), which is listed in the `.gitignore` file to prevent it from being committed to version control. For enhanced security, it is recommended to use environment variables or a dedicated secrets management service. 
