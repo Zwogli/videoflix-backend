@@ -54,7 +54,7 @@ Sensitive information such as passwords and API keys are stored in a separate co
 Instead of hardcoding sensitive information, you can set environment variables like this:
 
 ```bash
-`videoflix/config.py`
+`videoflix/config.py
 
 SECRET_KEY = 'your_SECRET_KEY'
 
