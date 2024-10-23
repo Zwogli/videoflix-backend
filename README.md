@@ -5,6 +5,7 @@
 -   [Introduction](#Introduction)
 -   [Technologies](#Technologies)
 -   [Utilisation](#Utilisation)
+-   [Testing](# Testing)
 -   [1. Decision making](#1-Decision-making)
 -   [2. Main function](#2-Main-function)
 -   [3. Deployment](#3-Deployment)
@@ -42,6 +43,14 @@ Videoflix is a backend for a Netflix clone that offers full registration, valida
 -   Upload video: POST /api/local-videos/
 
 </details>
+
+## Testing
+
+To ensure the reliability and stability of the application, tests have been written using **pytest**. These tests cover various functionalities of the API, including user registration, video uploads, and data retrieval. To run the tests, use the following command:
+
+```bash
+pytest
+```
 
 ## 1. Decision making
 
