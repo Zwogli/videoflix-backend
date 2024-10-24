@@ -46,22 +46,22 @@ def verify_email(request, uidb64, token):
     try:
         user_id = urlsafe_base64_decode(uidb64).decode()
         user = get_object_or_404(CustomUser, pk=user_id)
-        logger.debug(f"User found: {user.username}")
+        logger.debug(f"User found: {user.user_name}")
     except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
         logger.error("Invalid user ID format.")
         return Response({'error': 'Invalid user ID.'}, status=status.HTTP_400_BAD_REQUEST)
     
     if is_verification_expired(user.verification_expiry):
-        logger.warning(f"Verification expired for user: {user.username}")
+        logger.warning(f"Verification expired for user: {user.user_name}")
         return handle_expired_verification(user)
     
     if is_valid_token(user, token):
         user.is_verified = True
         user.save()
-        logger.info(f"User {user.username} has been verified successfully.")
+        logger.info(f"User {user.user_name} has been verified successfully.")
         return Response({'message': 'Your email has been verified.'}, status=status.HTTP_200_OK)
     else:
-        logger.warning(f"Invalid token provided for user {user.username}.")
+        logger.warning(f"Invalid token provided for user {user.user_name}.")
         return Response({'error': 'Verification link is invalid or has expired.'}, status=status.HTTP_400_BAD_REQUEST)
     
     
