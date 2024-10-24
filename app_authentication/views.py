@@ -1,13 +1,14 @@
 from django.conf import settings
 from rest_framework import generics, status
 from django.contrib.auth import get_user_model, authenticate, login
-from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
-from django.shortcuts import get_object_or_404
+from django.contrib.auth.hashers import make_password
 from django.utils import timezone
+from django.utils.http import urlsafe_base64_decode
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from django.contrib.auth.hashers import make_password
+from rest_framework.decorators import api_view
 
 from .serializers import UserSerializer
 from .models import CustomUser
@@ -28,7 +29,8 @@ class UserCreateView(generics.CreateAPIView):
         user = serializer.save()
         utils.send_verification_email(user)
         
-        
+
+@api_view(['GET'])        
 def verify_email(request, uidb64, token):
     """
     Verifies the user's email using the provided UID and token.
@@ -45,8 +47,7 @@ def verify_email(request, uidb64, token):
         return Response({'error': 'Invalid user ID.'}, status=status.HTTP_400_BAD_REQUEST)
     
     if is_verification_expired(user.verification_expiry):
-        user.delete()
-        return Response({'message': 'Verification link has expired and the account has been deleted.'}, status=status.HTTP_410_GONE)
+        return handle_expired_verification(user)
     
     if is_valid_token(user, token):
         user.is_verified = True
@@ -54,6 +55,11 @@ def verify_email(request, uidb64, token):
         return Response({'message': 'Your email has been verified.'}, status=status.HTTP_200_OK)
     else:
         return Response({'error': 'Verification link is invalid or has expired.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+def handle_expired_verification(user):
+    user.delete()
+    return Response({'message': 'Verification link has expired and the account has been deleted.'}, status=status.HTTP_410_GONE)    
     
     
 def is_verification_expired(expiry_time):
@@ -83,6 +89,7 @@ def is_valid_token(user, token):
     return default_token_generator.check_token(user, token)
 
 
+@api_view(['POST'])
 def user_login(request):
     """
     Handles user login via POST request with email and password.
