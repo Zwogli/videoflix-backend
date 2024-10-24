@@ -38,8 +38,11 @@ def verify_email(request, uidb64, token):
     :param token: Token sent in the verification email.
     :return: Response indicating the result of the verification process.
     """
-    user_id = urlsafe_base64_decode(uidb64).decode()
-    user = get_object_or_404(CustomUser, pk=user_id)
+    try:
+        user_id = urlsafe_base64_decode(uidb64).decode()
+        user = get_object_or_404(CustomUser, pk=user_id)
+    except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+        return Response({'error': 'Invalid user ID.'}, status=status.HTTP_400_BAD_REQUEST)
     
     if is_verification_expired(user.verification_expiry):
         user.delete()
