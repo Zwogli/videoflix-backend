@@ -79,7 +79,6 @@ In the first phase, I conceptualised the project and considered how I could divi
 
 ## 2. Main function
 
-<details>
 <summary>The main functions of the project include</summary>
 <br>
 
@@ -88,7 +87,6 @@ In the first phase, I conceptualised the project and considered how I could divi
 -   Backend processing: Background processing of uploads and conversions.
 -   Thumbnail creation: Automatic generation of thumbnails when uploading.
 -   Deletion of files: Cleaning up all files of a video.
-</details>
 
 ## 3. Deployment
 
