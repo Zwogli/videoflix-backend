@@ -7,6 +7,11 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http import JsonResponse
 
 import json
+import logging
+
+
+logger = logging.getLogger('app_authentication')
+
 
 def send_verification_email(user):
     """
@@ -17,6 +22,7 @@ def send_verification_email(user):
     """
     token = default_token_generator.make_token(user)
     user_id = urlsafe_base64_encode(force_bytes(user.pk)) # Encode the pk (primäry key)
+    logger.info(f"Generating verification email for user_id: {user_id}, token: {token}")
     verification_link = f"{settings.FRONTEND_URL}/verification/{user_id}/{token}/" 
     subject = 'Validation of the email address for Videoflix'
     message = create_verification_message(user, verification_link)
@@ -29,6 +35,7 @@ def send_verification_email(user):
     )
     email.content_subtype = "html"  # Specify that the email content is HTML
     email.send()
+    logger.info(f"Sent verification email to {user.email}")
     
     
 def create_verification_message(user, verification_link):
