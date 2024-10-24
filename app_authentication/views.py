@@ -8,7 +8,8 @@ from django.utils.http import urlsafe_base64_decode
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 
 from .serializers import UserSerializer
 from .models import CustomUser
@@ -32,7 +33,8 @@ class UserCreateView(generics.CreateAPIView):
         utils.send_verification_email(user)
         
 
-@api_view(['GET'])        
+@api_view(['GET'])
+@permission_classes([AllowAny])        
 def verify_email(request, uidb64, token):
     """
     Verifies the user's email using the provided UID and token.
