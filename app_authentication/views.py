@@ -15,8 +15,10 @@ from .models import CustomUser
 from . import utils
 
 import json
+import logging
 
 
+logger = logging.getLogger('app_authentication')
 CustomUser = get_user_model()
 
 
@@ -40,20 +42,26 @@ def verify_email(request, uidb64, token):
     :param token: Token sent in the verification email.
     :return: Response indicating the result of the verification process.
     """
+    logger.debug(f"Verifying email for uidb64: {uidb64} with token: {token}")
     try:
         user_id = urlsafe_base64_decode(uidb64).decode()
         user = get_object_or_404(CustomUser, pk=user_id)
+        logger.debug(f"User found: {user.username}")
     except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+        logger.error("Invalid user ID format.")
         return Response({'error': 'Invalid user ID.'}, status=status.HTTP_400_BAD_REQUEST)
     
     if is_verification_expired(user.verification_expiry):
+        logger.warning(f"Verification expired for user: {user.username}")
         return handle_expired_verification(user)
     
     if is_valid_token(user, token):
         user.is_verified = True
         user.save()
+        logger.info(f"User {user.username} has been verified successfully.")
         return Response({'message': 'Your email has been verified.'}, status=status.HTTP_200_OK)
     else:
+        logger.warning(f"Invalid token provided for user {user.username}.")
         return Response({'error': 'Verification link is invalid or has expired.'}, status=status.HTTP_400_BAD_REQUEST)
     
     
