@@ -317,6 +317,11 @@ LOGGING = {
             'level': 'DEBUG',  # Log level for Django-specific logs
             'propagate': True,
         },
+        'app_authentication': {  # Your project-specific logger
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',  # Set INFO for production
+            'propagate': False,
+        },
         'app_videoflix': {  # Your project-specific logger
             'handlers': ['console', 'file'],
             'level': 'DEBUG',  # Set INFO for production
