@@ -79,7 +79,7 @@ In the first phase, I conceptualised the project and considered how I could divi
 
 ## 2. Main function
 
-<summary>The main functions of the project include</summary>
+The main functions of the project include:
 <br>
 
 -   Video model: Model for storing videos.
