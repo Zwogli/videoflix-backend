@@ -100,6 +100,7 @@ def is_valid_token(user, token):
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def user_login(request):
     """
     Handles user login via POST request with email and password.
