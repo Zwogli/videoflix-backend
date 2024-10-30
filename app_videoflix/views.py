@@ -3,8 +3,8 @@ from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from rest_framework import status, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser
-from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAdminUser, AllowAny, IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 from .models import GlobalVideo, LocalVideo
 from .serializers import GlobalVideoSerializer, LocalVideoSerializer, LocalVideoUploadSerializer
 from rest_framework.permissions import IsAuthenticated
@@ -25,7 +25,7 @@ class GlobalVideoViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = GlobalVideo.objects.all()
     serializer_class = GlobalVideoSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [AllowAny]
 
 
 class LocalVideoViewSet(viewsets.ModelViewSet):
@@ -76,6 +76,7 @@ class UploadVideoView(APIView):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def thumbnail_status(request, video_id):
     """
     Check the thumbnail creation status of a local video.
