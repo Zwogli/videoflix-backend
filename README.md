@@ -30,7 +30,7 @@
     In your `videoflix/config.py`:
 
 ```bash
- SECRET_KEY = 'your_SECRET_KEY'
+SECRET_KEY = 'your_SECRET_KEY'
 
 DATABASE_USER = 'your_DATABASE_USER'
 DATABASE_PASSWORD = 'your_DATABASE_PASSWORD'
