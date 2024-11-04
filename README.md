@@ -30,14 +30,14 @@
     In your `videoflix/config.py`:
 
 ```bash
-    SECRET_KEY = 'your_SECRET_KEY'
+SECRET_KEY = 'your_SECRET_KEY'
 
-    DATABASE_USER = 'your_DATABASE_USER'
-    DATABASE_PASSWORD = 'your_DATABASE_PASSWORD'
+DATABASE_USER = 'your_DATABASE_USER'
+DATABASE_PASSWORD = 'your_DATABASE_PASSWORD'
 
-    EMAIL_HOST = 'your_EMAIL_HOST'
-    EMAIL_HOST_USER = 'your_EMAIL_HOST_USER'
-    EMAIL_HOST_PASSWORD = 'your_EMAIL_HOST_PASSWORD'
+EMAIL_HOST = 'your_EMAIL_HOST'
+EMAIL_HOST_USER = 'your_EMAIL_HOST_USER'
+EMAIL_HOST_PASSWORD = 'your_EMAIL_HOST_PASSWORD'
 ```
 
 For Deployment on your Server set your Server settings.
