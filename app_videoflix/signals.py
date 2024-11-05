@@ -85,8 +85,10 @@ def video_local_post_save(sender, instance, created, **kwargs):
         logger.info('New local video created: %s', instance.file.name)
         video_path = instance.file.path
         file_name = get_file_name_without_extension(video_path)
-        print("File Name:", file_name)
-        # create_thumbnail(video_path, instance, is_global=False)
+        
+        instance.thumbnail = 'static/images/coming-soon.jpg'  # Pfad zum Dummy-Bild
+        instance.save(update_fields=['thumbnail'])  # Update nur das Thumbnail-Feld
+        
         queue_thumbnail_conversion(video_path, instance, is_global=False)
         queue_video_resolution_conversion(video_path, file_name)
     else:
