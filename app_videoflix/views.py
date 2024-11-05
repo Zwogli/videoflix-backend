@@ -75,26 +75,45 @@ class UploadVideoView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def thumbnail_status(request, video_id):
     """
-    Check the thumbnail creation status of a local video.
-
-    This function returns whether the thumbnail for the video with the given ID 
-    has been created.
-
-    Args:
-        request: The HTTP request object.
-        video_id (int): The ID of the video to check.
-
-    Returns:
-        Response: A JSON response with the thumbnail creation status or an error message 
-        if the video does not exist.
+    Check the thumbnail creation status of a local video and return the URL if created.
     """
     try:
         video = LocalVideo.objects.get(id=video_id)
-        return Response({'thumbnailCreated': video.thumbnail_created})
+        if video.thumbnail_created:
+            # Verwende den Medien-URL-Pfad für das Thumbnail
+            thumbnail_url = request.build_absolute_uri(f'/media/{video.thumbnail}')
+            return Response({'thumbnailCreated': True, 'thumbnailUrl': thumbnail_url})
+        else:
+            return Response({'thumbnailCreated': False})
     except LocalVideo.DoesNotExist:
-        # Handle case where the video doesn't exist and return a 404 response
         return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+# @api_view(['GET'])
+# @permission_classes([AllowAny])
+# def thumbnail_status(request, video_id):
+#     """
+#     Check the thumbnail creation status of a local video.
+
+#     This function returns whether the thumbnail for the video with the given ID 
+#     has been created.
+
+#     Args:
+#         request: The HTTP request object.
+#         video_id (int): The ID of the video to check.
+
+#     Returns:
+#         Response: A JSON response with the thumbnail creation status or an error message 
+#         if the video does not exist.
+#     """
+#     try:
+#         video = LocalVideo.objects.get(id=video_id)
+#         return Response({'thumbnailCreated': video.thumbnail_created})
+#     except LocalVideo.DoesNotExist:
+#         # Handle case where the video doesn't exist and return a 404 response
+#         return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)
