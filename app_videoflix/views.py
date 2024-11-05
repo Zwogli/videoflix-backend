@@ -77,7 +77,7 @@ class UploadVideoView(APIView):
 
 
 @api_view(['GET'])
-def get_local_videos(request):
+def thumbnail_status(request):
     videos = LocalVideoSerializer.objects.filter(is_local=True)
     serializer = LocalVideoSerializer(videos, many=True)
     return Response(serializer.data)
