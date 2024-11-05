@@ -77,21 +77,10 @@ class UploadVideoView(APIView):
 
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
-def thumbnail_status(request, video_id):
-    """
-    Check the thumbnail creation status of a local video and return the URL if created.
-    """
-    try:
-        video = LocalVideo.objects.get(id=video_id)
-        if video.thumbnail_created:
-            # Verwende den Medien-URL-Pfad für das Thumbnail
-            thumbnail_url = request.build_absolute_uri(f'/media/{video.thumbnail}')
-            return Response({'thumbnailCreated': True, 'thumbnailUrl': thumbnail_url})
-        else:
-            return Response({'thumbnailCreated': False})
-    except LocalVideo.DoesNotExist:
-        return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)
+def get_local_videos(request):
+    videos = LocalVideoSerializer.objects.filter(is_local=True)
+    serializer = LocalVideoSerializer(videos, many=True)
+    return Response(serializer.data)
 
 
 # @api_view(['GET'])
