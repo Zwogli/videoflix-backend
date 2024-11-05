@@ -93,7 +93,6 @@ def thumbnail_status(request, video_id):
     except LocalVideo.DoesNotExist:
         return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)
 
-
 # @api_view(['GET'])
 # @permission_classes([AllowAny])
 # def thumbnail_status(request, video_id):
