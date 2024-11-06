@@ -75,34 +75,35 @@ class UploadVideoView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
+""" Test polling
 @api_view(['GET'])
 def thumbnail_status(request):
     videos = LocalVideoSerializer.objects.filter(is_local=True)
     serializer = LocalVideoSerializer(videos, many=True)
     return Response(serializer.data)
+"""
 
 
-# @api_view(['GET'])
-# @permission_classes([AllowAny])
-# def thumbnail_status(request, video_id):
-#     """
-#     Check the thumbnail creation status of a local video.
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def thumbnail_status(request, video_id):
+    """
+    Check the thumbnail creation status of a local video.
 
-#     This function returns whether the thumbnail for the video with the given ID 
-#     has been created.
+    This function returns whether the thumbnail for the video with the given ID 
+    has been created.
 
-#     Args:
-#         request: The HTTP request object.
-#         video_id (int): The ID of the video to check.
+    Args:
+        request: The HTTP request object.
+        video_id (int): The ID of the video to check.
 
-#     Returns:
-#         Response: A JSON response with the thumbnail creation status or an error message 
-#         if the video does not exist.
-#     """
-#     try:
-#         video = LocalVideo.objects.get(id=video_id)
-#         return Response({'thumbnailCreated': video.thumbnail_created})
-#     except LocalVideo.DoesNotExist:
-#         # Handle case where the video doesn't exist and return a 404 response
-#         return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)
+    Returns:
+        Response: A JSON response with the thumbnail creation status or an error message 
+        if the video does not exist.
+    """
+    try:
+        video = LocalVideo.objects.get(id=video_id)
+        return Response({'thumbnailCreated': video.thumbnail_created})
+    except LocalVideo.DoesNotExist:
+        # Handle case where the video doesn't exist and return a 404 response
+        return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)

@@ -9,6 +9,6 @@ router.register(r'local-videos', LocalVideoViewSet, basename='localvideo')
 urlpatterns = [
     path('', include(router.urls)), # Video listing and detail views
     path('upload/', UploadVideoView.as_view(), name='video-upload'), # Upload a new video
-    path('thumbnail-status/', thumbnail_status, name='thumbnail_status'), # Check thumbnail generation status
-    # path('thumbnail-status/<int:video_id>/', thumbnail_status, name='thumbnail_status'), # Check thumbnail generation status
+    path('thumbnail-status/<int:video_id>/', thumbnail_status, name='thumbnail_status'), # Check thumbnail generation status
+    # path('thumbnail-status/', thumbnail_status, name='thumbnail_status'), # * Test polling
 ]
