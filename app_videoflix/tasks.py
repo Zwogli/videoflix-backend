@@ -77,7 +77,7 @@ def create_thumbnail(video_path, instance, is_global):
     cmd = [
         'ffmpeg',
         '-i', video_path,
-        # '-ss', '00:00:1.000',
+        '-ss', '00:00:1.000',
         '-vframes', '1',
         thumbnail_path
     ]
