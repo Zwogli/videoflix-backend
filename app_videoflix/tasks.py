@@ -89,7 +89,7 @@ def create_thumbnail(video_path, instance, is_global):
         instance.save()
         logger.info(f'Thumbnail created and saved at {thumbnail_path}')
     except subprocess.CalledProcessError:
-        logger.error(f'Failed to create thumbnail for {video_path}')
+        logger.error(f'Failed to create thumbnail for {thumbnail_path} with error: {e}')
         raise
     
 
