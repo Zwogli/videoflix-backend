@@ -133,8 +133,11 @@ def run_ffmpeg_command(cmd):
         subprocess.CalledProcessError: If the ffmpeg command fails.
     """
     try:
-        subprocess.run(cmd, check=True)
+        # subprocess.run(cmd, check=True)
+        logger.info(f'Try bevor run subprocess: {" ".join(cmd)}') #! Changes
+        result = subprocess.run(cmd, check=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE) #! Changes
         logger.info(f'FFmpeg command executed successfully: {" ".join(cmd)}')
+        logger.debug(f'Stdout: {result.stdout.decode()}') #! Changes
     except subprocess.CalledProcessError as e:
         error_message = e.stderr.decode()  #! Changes: Decodes stderr output for more readable error details
         logger.error(f'FFmpeg command failed: {" ".join(cmd)}; Error: {error_message}') #! Changes
