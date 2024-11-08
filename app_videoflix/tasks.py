@@ -73,7 +73,8 @@ def create_thumbnail(video_path, instance, is_global):
         is_global (bool): Indicates if the video is global or local.
     """
     thumbnail_path = set_thumbnail_path(video_path, is_global)
-    check_thumbnail_path(thumbnail_path)    
+    check_thumbnail_path(thumbnail_path)
+    logger.info(f'Thumbnail created and saved at thumbnail: {thumbnail_path} video: {video_path}')
     cmd = [
         'ffmpeg',
         '-i', video_path,
@@ -81,6 +82,7 @@ def create_thumbnail(video_path, instance, is_global):
         '-vframes', '1',
         thumbnail_path
     ]
+    logger.info(f'Executing FFmpeg command: {" ".join(cmd)}')   #! Changes
     try:
         run_ffmpeg_command(cmd)
         relative_thumbnail_path = os.path.relpath(thumbnail_path, 'media/')
@@ -131,6 +133,6 @@ def run_ffmpeg_command(cmd):
         subprocess.run(cmd, check=True)
         logger.info(f'FFmpeg command executed successfully: {" ".join(cmd)}')
     except subprocess.CalledProcessError as e:
-        error_message = e.stderr.decode()  #! Decodes stderr output for more readable error details
+        error_message = e.stderr.decode()  #! Changes: Decodes stderr output for more readable error details
         logger.error(f'FFmpeg command failed: {" ".join(cmd)}; Error: {error_message}') #! Changes
         raise
