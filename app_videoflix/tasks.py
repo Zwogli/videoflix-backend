@@ -84,10 +84,13 @@ def create_thumbnail(video_path, instance, is_global):
     ]
     logger.info(f'Executing FFmpeg command: {" ".join(cmd)}')   #! Changes
     try:
+        logger.info(f'Try bevor run cmd: {" ".join(cmd)}') #! Changes
         run_ffmpeg_command(cmd)
         relative_thumbnail_path = os.path.relpath(thumbnail_path, 'media/')
+        logger.info(f'Show relative_thumbnail_path: {relative_thumbnail_path}') #! Changes
         instance.thumbnail = relative_thumbnail_path
         instance.thumbnail_created = True
+        logger.info(f'Show instance with created thumbnail: {instance}') #! Changes
         instance.save()
         logger.info(f'Thumbnail created and saved at {thumbnail_path}')
     except subprocess.CalledProcessError as e:
