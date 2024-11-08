@@ -131,5 +131,6 @@ def run_ffmpeg_command(cmd):
         subprocess.run(cmd, check=True)
         logger.info(f'FFmpeg command executed successfully: {" ".join(cmd)}')
     except subprocess.CalledProcessError as e:
-        logger.error(f'FFmpeg command failed: {" ".join(cmd)}; Error: {e}')
+        error_message = e.stderr.decode()  #! Decodes stderr output for more readable error details
+        logger.error(f'FFmpeg command failed: {" ".join(cmd)}; Error: {error_message}') #! Changes
         raise
