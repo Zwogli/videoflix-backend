@@ -74,7 +74,7 @@ def create_thumbnail(video_path, instance, is_global):
     """
     thumbnail_path = set_thumbnail_path(video_path, is_global)
     check_thumbnail_path(thumbnail_path)
-    logger.info(f'Thumbnail created and saved at thumbnail: {thumbnail_path} video: {video_path}')
+    logger.info(f'Thumbnail and Video path: {thumbnail_path} video: {video_path}') #! Changes
     cmd = [
         'ffmpeg',
         '-i', video_path,
