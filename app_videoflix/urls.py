@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import GlobalVideoViewSet, LocalVideoViewSet, UploadVideoView, thumbnail_status
+from .views import GlobalVideoViewSet, LocalVideoViewSet, UploadVideoView, thumbnail_status, thumbnail_status_test
 
 router = DefaultRouter()
 router.register(r'global-videos', GlobalVideoViewSet, basename='globalvideo')
@@ -11,4 +11,5 @@ urlpatterns = [
     path('upload/', UploadVideoView.as_view(), name='video-upload'), # Upload a new video
     path('thumbnail-status/<int:video_id>/', thumbnail_status, name='thumbnail_status'), # Check thumbnail generation status
     # path('thumbnail-status/', thumbnail_status, name='thumbnail_status'), # * Test polling
+    path('thumbnail-status-test/<int:video_id>/', thumbnail_status_test, name='thumbnail_status'),
 ]

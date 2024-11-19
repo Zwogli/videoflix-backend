@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -107,3 +108,22 @@ def thumbnail_status(request, video_id):
     except LocalVideo.DoesNotExist:
         # Handle case where the video doesn't exist and return a 404 response
         return Response({'error': 'Video not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+    
+@api_view(['GET'])
+def thumbnail_status_test(request, video_id):
+    """
+    API-Endpunkt, um den Status der Thumbnail-Generierung abzufragen.
+    """
+    video = get_object_or_404(LocalVideo, id=video_id)
+    
+    if video.thumbnail_created:
+        return Response({
+            "status": "done",
+            "thumbnail_url": video.thumbnail.url if video.thumbnail else None
+        })
+    else:
+        return Response({
+            "status": "pending",
+            "thumbnail_url": None
+        })
