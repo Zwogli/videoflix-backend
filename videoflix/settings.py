@@ -19,6 +19,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 log_file_path = BASE_DIR / 'django.log'
 print(f"Log file path: {log_file_path}")
 
+BASE_URL = 'https://videoflix-server.mathias-kohler.de'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 

@@ -115,12 +115,14 @@ def thumbnail_status_test(request, video_id):
     """
     API-Endpunkt, um den Status der Thumbnail-Generierung abzufragen.
     """
+    base_url = settings.BASE_URL
     video = get_object_or_404(LocalVideo, id=video_id)
     
     if video.thumbnail_created:
+        thumbnail_url = f"{base_url}{video.thumbnail.url}" if video.thumbnail else None
         return Response({
             "status": "done",
-            "thumbnail_url": video.thumbnail.url if video.thumbnail else None
+            "thumbnail_url": thumbnail_url
         })
     else:
         return Response({
