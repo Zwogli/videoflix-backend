@@ -34,7 +34,7 @@ ALLOWED_HOSTS = [
 	'localhost', 
 	'127.0.0.1', 
 	'[::1]',
-	'35.234.78.80',
+	'34.159.49.18',
 	'videoflix-server.mathias-kohler.de'
 ]
 
